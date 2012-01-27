@@ -6,7 +6,7 @@
  * Written 2012 by Nicolas Kristoffersen (nicolaskristoffersen.com) at Wemind (wemind.dk)
  */
 
-// GIT TEST
+// GIT TEST2
 
 /**
  * Add a challenge to the database
