@@ -21,15 +21,13 @@ function goxeed_user_login(&$edit, $account) {												// Upon login ...
  */
 function goxeed_user_delete($account)
 {
-  
-  $user_account = user_load ($account->uid);
+  $user_account = goxeed_user_secure_load ($account->uid);
   
   $items = $user_account->field_goxeed_game_user_nid['und'];
   foreach ($items as $item)
   {
     node_delete ($item['value']);
   }
-
 }
 
 /**
@@ -45,9 +43,9 @@ function goxeed_user_delete($account)
  */
 function goxeed_username_alter (&$name, $account)
 {
-  $account = user_load ($account->uid);
-  $items_first_name = field_get_items ("user", $account, "field_goxeed_first_name");				// Get the first name items
-  $items_last_name = field_get_items ("user", $account, "field_goxeed_last_name");				// Get the last name items
+  $account = goxeed_user_secure_load ($account->uid);
+  $items_first_name = goxeed_field_secure_get_items ("user", $account, "field_goxeed_first_name");				// Get the first name items
+  $items_last_name = goxeed_field_secure_get_items ("user", $account, "field_goxeed_last_name");				// Get the last name items
   $user_name = $items_first_name[0]["value"] .  " " .$items_last_name[0]["value"];		// Combine first and last name
   if (strlen($user_name)>1) $name = $user_name;											// If the name exists, use it instead of the the Drupal user name
 }
@@ -66,9 +64,9 @@ function goxeed_username_alter (&$name, $account)
 function goxeed_real_name ($account)
 {
   $name = format_username ($account);
-  $account = user_load ($account->uid);
-  $items_first_name = field_get_items ("user", $account, "field_goxeed_first_name");				// Get the first name items
-  $items_last_name = field_get_items ("user", $account, "field_goxeed_last_name");				// Get the last name items
+  $account = goxeed_user_secure_load ($account->uid);
+  $items_first_name = goxeed_field_secure_get_items ("user", $account, "field_goxeed_first_name");				// Get the first name items
+  $items_last_name = goxeed_field_secure_get_items ("user", $account, "field_goxeed_last_name");				// Get the last name items
   $user_name = $items_first_name[0]["value"] .  " " .$items_last_name[0]["value"];		// Combine first and last name
   if (strlen($user_name)>1) $name = $user_name;											// If the name exists, use it instead of the the Drupal user name
   return $name;
@@ -86,8 +84,8 @@ function goxeed_real_name ($account)
 function goxeed_first_name ($account)
 {
   $name = format_username ($account);
-  $account = user_load ($account->uid);
-  $items_first_name = field_get_items ("user", $account, "field_goxeed_first_name");				// Get the first name items
+  $account = goxeed_user_secure_load ($account->uid);
+  $items_first_name = goxeed_field_secure_get_items ("user", $account, "field_goxeed_first_name");				// Get the first name items
   $user_name = $items_first_name[0]["value"];														// Combine first and last name
   if (strlen($user_name)>1) $name = $user_name;													// If the name exists, use it instead of the the Drupal user name
   return $name;
@@ -182,7 +180,7 @@ function goxeed_goxeed_user_profile_form_alter($form)
  */
 function goxeed_goxeed_user_profile_game_user_add ($user_uid, $game_user_nid)
 {
-  $user_profile = user_load ($user_uid);
+  $user_profile = goxeed_user_secure_load ($user_uid);
   $user_profile->field_goxeed_game_user_nid["und"][] = array("value" => $game_user_nid);
   user_save ($user_profile);
 }
@@ -198,8 +196,8 @@ function goxeed_goxeed_user_profile_game_user_add ($user_uid, $game_user_nid)
  */
 function goxeed_user_profile_game_user_remove ($user_uid, $game_user_nid)
 {
-  $user_profile = user_load ($user_uid);
-  $items = field_get_items ('user', $user_profile, 'field_goxeed_game_user_nid');
+  $user_profile = goxeed_user_secure_load ($user_uid);
+  $items = goxeed_field_secure_get_items ('user', $user_profile, 'field_goxeed_game_user_nid');
   foreach ($items as $key => $item)
   {
     if ($item["value"] == $game_user_nid)
@@ -254,7 +252,7 @@ function goxeed_update_profile_data_with_linkedin()
           'field_goxeed_li_prof_url' => array('und' => array(0 =>
               array('value' => $linkedin_get_profile_fields["public-profile-url"]),),),	// Store url for users public profile on LinkedIn
       );
-      $account = user_load($user->uid);												// Load the current user object
+      $account = goxeed_user_secure_load($user->uid);												// Load the current user object
       $account = user_save($account, $userinfo);										// Save the user object with updates
     }
   }
@@ -267,11 +265,12 @@ function goxeed_update_profile_data_with_linkedin()
  */
 function goxeed_user_view($account, $view_mode, $langcode)
 {
+  
   $result = "";
    
   $user_image_html = "";
-  $user_object = user_load($account->uid);
-  $first_name_items = field_get_items ("user", $user_object, "field_goxeed_first_name");
+  $user_object = goxeed_user_secure_load($account->uid);
+  $first_name_items = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_first_name");
   $first_name = $first_name_items[0]["value"];
   if (isset ($user_object->field_goxeed_li_pic_url["und"]))
   		$user_view_mode_top_image = $user_object->field_goxeed_li_pic_url["und"][0]["value"];
@@ -279,18 +278,19 @@ function goxeed_user_view($account, $view_mode, $langcode)
   		$user_linkedin_profile_url = $user_object->field_goxeed_li_prof_url["und"][0]["value"];
   if (isset($user_view_mode_top_image))
     $user_image_html = '<a href="'. url("") .'"><img src="'. $user_view_mode_top_image.'"></a>';
-  $items = field_get_items ("user", $user_object, "field_goxeed_user_points");			// Get the user point field
+  $items = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_user_points");			// Get the user point field
   if ($items) $user_points = $items[0]["value"];									// If present stor the point value
 
   // ** Print the LinkedIn image with a link to the users linked in public profile
 
   $user_points = goxeed_user_profile_points ($account->uid);
-   
+
+
   $result = $result . "<ul class='user profile'>";
   $result = $result . $user_image_html;
   drupal_set_title ("");
   $result = $result . "<div class='username'><h2>".goxeed_real_name ($user_object)."</h2></div>";
-  $items = field_get_items ("user", $user_object, "field_goxeed_description");
+  $items = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_description");
   $description = $items[0]["value"];
    
   $result = $result . "<div class='linkedin description clearfix'><p>".$description."</p></div>";
@@ -299,7 +299,7 @@ function goxeed_user_view($account, $view_mode, $langcode)
    
   $result = $result . goxeed_mission_badges_html ($account->uid, -1);
   $result = $result . "<div id='experiences'>";
-  $items = field_get_items ("user", $user_object, "field_goxeed_first_name");
+  $items = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_first_name");
   $first_name = $items[0]["value"];
    
   $result = $result."<h3>" . goxeed_first_name($user_object)."'s " . t("experiences") . "</h3>";
@@ -308,33 +308,34 @@ function goxeed_user_view($account, $view_mode, $langcode)
   
    
   $challenge_user_nids = array();
-  $game_user_nids = field_get_items ("user", $user_object, "field_goxeed_game_user_nid");
+  $game_user_nids = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_game_user_nid");
   if ($game_user_nids) foreach ($game_user_nids as $game_user_nid)
   {
   		$challenge_user_nids = array_merge ($challenge_user_nids, goxeed_game_user_challenge_users($game_user_nid["value"]));
   }
    
   $list = "";
+
   foreach ($challenge_user_nids as $challenge_user_nid)
   {
-  		$node = node_load ($challenge_user_nid);
-  		$items = field_get_items ('node', $node, 'field_goxeed_challenge_nid');
-  		$challenge_nid = $items[0]['value'];
-  		$comment_items = field_get_items ("node", $node, "field_goxeed_challenge_comment");
-  		$comment = $comment_items[0]["value"];
-  		if (strlen($comment)>0)
-  		{
-  		  $image_url_items = field_get_items ("user", $user_object, "field_goxeed_li_pic_url");
-  		  $image_url = $image_url_items[0]["value"];
-  		  global $user;
-  		  $challenge_user_current_user = goxeed_challenge_challenge_user_find($challenge_nid, $user->uid);
-  		  if ($challenge_user_current_user)    // If the current user has a challenge user for the challenge, show the experience. If not, the current user is not playing the game and should not see this experience
-  		  {
-  		    $challenge_user_current_user = 'node/'.$challenge_user_current_user;
-  		    $date_time = format_date($node->changed, 'custom', 'm.d.Y - H:i');
-  		    $list = $list . "<li class='comment'><a href='".url("user/".$user_object->uid)."'><img src='".$image_url."' /></a><b>".goxeed_first_name($user_object).":</b><p>" .$comment. ' '. l('Go to challenge ...', $challenge_user_current_user). '</p><p class="datetime">'.$date_time.'</p></li>';
-  		  }
-  		}
+    $node = goxeed_node_secure_load ($challenge_user_nid);
+    $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_challenge_nid');
+    $challenge_nid = $items[0]['value'];
+    $comment_items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_challenge_comment");
+    $comment = $comment_items[0]["value"];
+    if (strlen($comment)>0)
+    {
+      $image_url_items = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_li_pic_url");
+      $image_url = $image_url_items[0]["value"];
+      global $user;
+      $challenge_user_current_user = goxeed_challenge_challenge_user_find($challenge_nid, $user->uid);
+      if ($challenge_user_current_user)    // If the current user has a challenge user for the challenge, show the experience. If not, the current user is not playing the game and should not see this experience
+      {
+        $challenge_user_current_user = 'node/'.$challenge_user_current_user;
+        $date_time = format_date($node->changed, 'custom', 'm.d.Y - H:i');
+        $list = $list . "<li class='comment'><a href='".url("user/".$user_object->uid)."'><img src='".$image_url."' /></a><b>".goxeed_first_name($user_object).":</b><p>" .$comment. ' '. l('Go to challenge ...', $challenge_user_current_user). '</p><p class="datetime">'.$date_time.'</p></li>';
+      }
+    }
   }
 
   if ($list == "")
@@ -363,8 +364,8 @@ function goxeed_user_view($account, $view_mode, $langcode)
 function goxeed_user_profile_badges ($uid)
 {
   $result = array();
-  $user = user_load ($uid);
-  $items = field_get_items ('user', $user, 'field_goxeed_game_user_nid');
+  $user = goxeed_user_secure_load ($uid);
+  $items = goxeed_field_secure_get_items ('user', $user, 'field_goxeed_game_user_nid');
   if ($items)
   foreach ($items as $item)
   {
@@ -383,13 +384,13 @@ function goxeed_user_profile_badges ($uid)
 function goxeed_user_profile_user_points_update($user_uid)
 {
   $points = 0;
-  $user = user_load ($user_uid);
-  $game_user_items = field_get_items ("user", $user, "field_goxeed_game_user_nid");
+  $user = goxeed_user_secure_load ($user_uid);
+  $game_user_items = goxeed_field_secure_get_items ("user", $user, "field_goxeed_game_user_nid");
   if ($game_user_items) foreach ($game_user_items  as $game_user_item)
   {
   		$points = $points + goxeed_game_user_points ($game_user_item["value"]);
   }
-  $items = field_get_items("user", $user, "field_goxeed_user_points");
+  $items = goxeed_field_secure_get_items("user", $user, "field_goxeed_user_points");
   $memory = $items[0]["value"];
   if ($points != $memory)
   {

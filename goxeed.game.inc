@@ -16,8 +16,8 @@
  */
 function goxeed_goxeed_goxeed_game_delete($node)													// If a game has been deleted ...
 {
-  $node = node_load ($node->nid);
-  $mission_items = field_get_items ("node", $node, "field_goxeed_mission_nid");
+  $node = goxeed_node_secure_load ($node->nid);
+  $mission_items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");
   if ($mission_items)
   {
   foreach ($mission_items as $mission_item)
@@ -25,7 +25,7 @@ function goxeed_goxeed_goxeed_game_delete($node)													// If a game has be
       node_delete ($mission_item["value"]);
     }
   }
-  $game_user_items = field_get_items ("node", $node, "field_goxeed_game_user_nid");
+  $game_user_items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");
   if ($game_user_items)
   {
     foreach ($game_user_items as $game_user_item)
@@ -45,7 +45,7 @@ function goxeed_goxeed_goxeed_game_delete($node)													// If a game has be
  */
 function goxeed_game_mission_add ($game_nid, $mission_nid)
 {
-  $game = node_load ($game_nid);
+  $game = goxeed_node_secure_load ($game_nid);
   $game->field_goxeed_mission_nid["und"][] = array ("value" => $mission_nid);
   node_save ($game);
 }
@@ -60,8 +60,8 @@ function goxeed_game_mission_add ($game_nid, $mission_nid)
  */
 function goxeed_game_mission_remove ($nid, $target_nid)
 {
-  $node = node_load ($nid);
-  $items = field_get_items ('node', $node, 'field_goxeed_mission_nid');
+  $node = goxeed_node_secure_load ($nid);
+  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_mission_nid');
   if ($items) foreach ($items as $key => $item)
   {
     if ($item["value"] == $target_nid)
@@ -83,8 +83,8 @@ function goxeed_game_mission_remove ($nid, $target_nid)
 function goxeed_game_game_user_add ($game_nid, $game_user_nid)								// Takes game node id and game user node id
 {
   $found = false;																			// Initially assume user not alreay registered for this game
-  $game = node_load($game_nid);															// Load the game
-  $game_user_items = field_get_items ("node", $game, "field_goxeed_game_user_nid");					// Get current game users
+  $game = goxeed_node_secure_load($game_nid);															// Load the game
+  $game_user_items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_game_user_nid");					// Get current game users
   if ($game_user_items)																	// If any exists ..
     foreach ($game_user_items as $game_user_item)										// .. loop though them ...
     if ($game_user_item["value"] == $game_user_nid)	$found = true;					// .. if new user is found set flag for found
@@ -105,8 +105,8 @@ function goxeed_game_game_user_add ($game_nid, $game_user_nid)								// Takes g
  */
 function goxeed_game_game_user_remove ($nid, $target_nid)
 {
-  $node = node_load ($nid);
-  $items = field_get_items ('node', $node, 'field_goxeed_game_user_nid');
+  $node = goxeed_node_secure_load ($nid);
+  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_game_user_nid');
   foreach ($items as $key => $item)
   {
     if ($item["value"] == $target_nid)
@@ -127,9 +127,9 @@ function goxeed_game_game_user_remove ($nid, $target_nid)
  */
 function goxeed_game_top_players_update($nid)
 {
-  $node = node_load ($nid);
+  $node = goxeed_node_secure_load ($nid);
   $items = array();
-  $game_user_nids = field_get_items ("node", $node, "field_goxeed_game_user_nid");
+  $game_user_nids = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");
    
   if ($game_user_nids) foreach ($game_user_nids as $game_user_nid)
   {
@@ -158,21 +158,21 @@ function goxeed_game_top_players_update($nid)
 function goxeed_game_top_players($nid)
 {
   $result = "<ul>";
-  $node = node_load ($nid);
-  $game_users = field_get_items ("node", $node, "field_goxeed_game_user_nid");
+  $node = goxeed_node_secure_load ($nid);
+  $game_users = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");
   $position = 0;
   $current_points = -1;
   $postion_real = 0;
   if ($game_users) foreach ($game_users as $game_user)
   {
-    $node = node_load ($game_user["value"]);
+    $node = goxeed_node_secure_load ($game_user["value"]);
     if ($node)
     {
       $game_user_id = $node->nid;
-      $items = field_get_items ('node', $node, 'field_goxeed_active');
+      $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_active');
       if ($items[0]['value'] == "1")
       {
-        $items = field_get_items ("node", $node, "field_goxeed_user_points");
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_user_points");
         $game_user_points = $items[0]["value"];
         $position++;
         if ($current_points != $game_user_points)
@@ -181,15 +181,15 @@ function goxeed_game_top_players($nid)
           $current_points = $game_user_points;
         }
         $current_points = $game_user_points;
-        $items = field_get_items ("node", $node, "field_goxeed_user_uid");
-        $user = user_load ($items[0]["value"]);
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_user_uid");
+        $user = goxeed_user_secure_load ($items[0]["value"]);
         $user_name = goxeed_real_name($user);
         $result = $result . "<li><span class='position'>".$position_local."</span>".l($user_name, "user/".$user->uid)."<span class='points'>".$game_user_points."</span></li>";
       }
     }
     else
     {
-      drupal_set_message ('GoXeed Warning: Missing node ' . $game_user["value"]. ' referenced in node '.$nid, 'warning');
+      watchdog ('goxeed','Missing node ' . $game_user["value"]. ' referenced in node '.$nid, 'warning', array(), WATCHDOG_ERROR);
     }
    }
   return $result."</ul>";
@@ -224,24 +224,24 @@ function goxeed_goxeed_goxeed_game_access($node, $op, $account)
   }
   else if ($op == "update")																// If requesting access for updating a game
   {
-  		$account_full = user_load ($account->uid);
-  		$field_goxeed_admin_a = field_get_items("user", $account_full, "field_goxeed_admin_a");
+  		$account_full = goxeed_user_secure_load ($account->uid);
+  		$field_goxeed_admin_a = goxeed_field_secure_get_items("user", $account_full, "field_goxeed_admin_a");
   		if ($field_goxeed_admin_a[0]["value"])
   		{
     		$result = NODE_ACCESS_ALLOW;
   		}
   			
-  		$items = field_get_items ("node", $node, "field_goxeed_administrator");					// Get administrator fields
+  		$items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_administrator");					// Get administrator fields
   		if ($items) foreach ($items as $administrator_current)								// If items exist loop through them ...
   		{
-  		  if ($administrator_current["uid"] == $account->uid)								// ... as if one of them has the id of the current user ...
+        if ($administrator_current["uid"] == $account->uid)								// ... as if one of them has the id of the current user ...
   		    $result = NODE_ACCESS_ALLOW;												// ... allow access
   		}
   }
   else if ($op == "create")
   {
-    $account_full = user_load ($account->uid);
-    $field_goxeed_admin_a = field_get_items("user", $account_full, "field_goxeed_admin_a");
+    $account_full = goxeed_user_secure_load ($account->uid);
+    $field_goxeed_admin_a = goxeed_field_secure_get_items("user", $account_full, "field_goxeed_admin_a");
     if ($field_goxeed_admin_a[0]["value"])
     {
       $result = NODE_ACCESS_ALLOW;
@@ -262,8 +262,8 @@ function goxeed_goxeed_goxeed_game_access($node, $op, $account)
 function goxeed_game_game_user_sorted ($game_nid)
 {
   $sort_array = array();
-  $game = node_load ($game_nid);
-  $game_user_items = field_get_items ("node", $game, "field_goxeed_game_user_nid");
+  $game = goxeed_node_secure_load ($game_nid);
+  $game_user_items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_game_user_nid");
   foreach ($game_user_items as $game_user_item)
   {
     $points = goxeed_game_user_points ($game_user_item["value"]);
@@ -320,7 +320,7 @@ function goxeed_goxeed_preprocess_goxeed_game($variables)
   $result = "";																			// Start with an empty result of the processing
   $node = $variables["node"];																// Get the node object from variables
   $view_mode = $variables["view_mode"];
-  $game = node_load ($node->nid);															// Load the full game node to make sure all fields are loaded
+  $game = goxeed_node_secure_load ($node->nid);															// Load the full game node to make sure all fields are loaded
 
   if ($view_mode == "teaser")
   {
@@ -334,28 +334,28 @@ function goxeed_goxeed_preprocess_goxeed_game($variables)
     // Hanndle signup
     if (array_key_exists("signup_code", $_POST))											// If a signup code has been entered
     {
-      $items = field_get_items ("node", $game, "field_goxeed_signup_code");						// Get the game signup code field
+      $items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_signup_code");						// Get the game signup code field
       if ($_POST["signup_code"] == $items[0]["value"])									// If the entered signup code is equal to the game signup code ..
       {
         $game_user = goxeed_game_user_create
         ($game->nid, $user->uid, true);												// ... create an active game user node for the current game and current user ..
          
-        $mission_items = field_get_items ("node", $game, "field_goxeed_mission_nid");
+        $mission_items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_mission_nid");
         if ($mission_items)
           foreach ($mission_items as $mission_item)
           {
             $mission_user = goxeed_mission_user_create ($game_user->nid);
             goxeed_goxeed_mission_user_mission_nid_set ($mission_user->nid, $mission_item["value"]);
-            $mission = node_load ($mission_item["value"]);
+            $mission = goxeed_node_secure_load ($mission_item["value"]);
             goxeed_goxeed_mission_mission_user_add($mission, $mission_user->nid);
             node_save ($mission);
-            $challenge_items = field_get_items ("node", $mission, "field_goxeed_challenge_nid");
+            $challenge_items = goxeed_field_secure_get_items ("node", $mission, "field_goxeed_challenge_nid");
             if ($challenge_items)
               foreach ($challenge_items as $challenge_item)
               {
                 $challenge_user = goxeed_challenge_user_create ($mission_user->nid);
                 goxeed_challenge_user_challenge_nid_set ($challenge_user->nid, $challenge_item["value"]);
-                $challenge = node_load ($challenge_item["value"]);
+                $challenge = goxeed_node_secure_load ($challenge_item["value"]);
                 goxeed_challenge_challenge_user_add($challenge, $challenge_user->nid);
                 node_save ($challenge);
               }
@@ -443,14 +443,14 @@ function goxeed_game_user_nid ($game_nid, $user_uid)
 {
 $result = -1;																			// Assume the user is not signed up for the game
 
-  $game = node_load ($game_nid);
-  $game_user_items = field_get_items ("node", $game, "field_goxeed_game_user_nid");
+  $game = goxeed_node_secure_load ($game_nid);
+  $game_user_items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_game_user_nid");
 
   if ($game_user_items)
     foreach ($game_user_items as $game_user_nid)
     {
-      $game_user_node = node_load ($game_user_nid["value"]);										// Load the current game_user node
-      $game_user_user_items = field_get_items ("node", $game_user_node, "field_goxeed_user_uid");	// Get the game_user user reference items
+      $game_user_node = goxeed_node_secure_load ($game_user_nid["value"]);										// Load the current game_user node
+      $game_user_user_items = goxeed_field_secure_get_items ("node", $game_user_node, "field_goxeed_user_uid");	// Get the game_user user reference items
       if ($game_user_user_items[0]["value"] == $user_uid)									// If game_user holds the right user reference and game reference ..
         $result = $game_user_node->nid;														// .. store the node id as the result
     }

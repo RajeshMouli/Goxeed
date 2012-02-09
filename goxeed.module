@@ -188,14 +188,14 @@ function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
 {
   $active_trail = array();																// Clear Drupal internal breadcrumbs
   global $user;																			// Get global user object
-  $user_local = user_load($user->uid);													// Load the logged in user
+  $user_local = goxeed_user_secure_load($user->uid);													// Load the logged in user
   if (arg(0) == "user")																	// If the page is a user..
   {
-    if (strlen(arg(1)) > 0)	$user_local = user_load(arg(1));						// .. load that user instead
+    if (strlen(arg(1)) > 0)	$user_local = goxeed_user_secure_load(arg(1));						// .. load that user instead
   }
   else if (arg(0) == "node" && strlen(arg(1)) > 0)										// If the page is a node
   {
-    $node = node_load (arg(1));															// Load the node of the page
+    $node = goxeed_node_secure_load (arg(1));															// Load the node of the page
     	
     if ($node)
     {
@@ -205,17 +205,17 @@ function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
       {
         array_unshift ($active_trail, array("title" => $node->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Set a breadcrumb item
-        $items = field_get_items ("node", $node, "field_goxeed_mission_nid");					// Get the mission the challenge belongs to ...
-        $node = node_load($items[0]["value"]);										// ... and load it
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get the mission the challenge belongs to ...
+        $node = goxeed_node_secure_load($items[0]["value"]);										// ... and load it
       }
       if ($node->type == "goxeed_challenge_user")											// If the current page is a challenge user
       {
-        $items = field_get_items ("node", $node, "field_goxeed_challenge_nid");				// Get the challenge node id
-        $node_title = node_load($items[0]["value"]);									// ... and load that node to set the title
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_challenge_nid");				// Get the challenge node id
+        $node_title = goxeed_node_secure_load($items[0]["value"]);									// ... and load that node to set the title
         array_unshift ($active_trail, array("title" => $node_title->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Set the breadcrumb item
-        $items = field_get_items ("node", $node, "field_goxeed_mission_user_nid");				// Get the mission user node id ...
-        $node = node_load($items[0]["value"]);										// ... and load the node
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");				// Get the mission user node id ...
+        $node = goxeed_node_secure_load($items[0]["value"]);										// ... and load the node
       }
 
       // MISSION
@@ -224,17 +224,17 @@ function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
       {
         array_unshift ($active_trail, array("title" => $node->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the mission to the breadcrumb ..
-        $items = field_get_items ("node", $node, "field_goxeed_game_nid");						// Get the game id ..
-        $node = node_load($items[0]["value"]);										// .. and load the game.
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get the game id ..
+        $node = goxeed_node_secure_load($items[0]["value"]);										// .. and load the game.
       }
       if ($node->type == "goxeed_mission_user")												// If the current item is a mission user ..
       {
-        $items = field_get_items ("node", $node, "field_goxeed_mission_nid");					// Get mission id
-        $node_title = node_load($items[0]["value"]);									// .. load mission node
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get mission id
+        $node_title = goxeed_node_secure_load($items[0]["value"]);									// .. load mission node
         array_unshift ($active_trail, array("title" => $node_title->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the breadcrumb item
-        $items = field_get_items ("node", $node, "field_goxeed_game_user_nid");				// Get game user items ..
-        $node = node_load($items[0]["value"]);										// .. and load the game user
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");				// Get game user items ..
+        $node = goxeed_node_secure_load($items[0]["value"]);										// .. and load the game user
       }
 
       // GAME
@@ -243,16 +243,16 @@ function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
       {
         array_unshift ($active_trail, array("title" => $node->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the game to the breadcrumb
-        $user_local = user_load($user->uid);										// Load the logged in user
+        $user_local = goxeed_user_secure_load($user->uid);										// Load the logged in user
       }
       if ($node->type == "goxeed_game_user")
       {
-        $items = field_get_items ("node", $node, "field_goxeed_game_nid");						// Get game id
-        $node_title = node_load($items[0]["value"]);									// .. load game node
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get game id
+        $node_title = goxeed_node_secure_load($items[0]["value"]);									// .. load game node
         array_unshift ($active_trail, array("title" => $node_title->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the breadcrumb item
-        $items = field_get_items ("node", $node, "field_goxeed_user_uid");						// Load the game user user items
-        $user_local = user_load($items[0]["value"]);									// .. and load the game user user
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_user_uid");						// Load the game user user items
+        $user_local = goxeed_user_secure_load($items[0]["value"]);									// .. and load the game user user
       }
     }
   }
@@ -360,5 +360,51 @@ function goxeed_module_preprocess_page (&$variables)
   	
   if ($user->uid > 1) $variables["secondary_menu"] = array();
 
+}
+
+
+/**
+  *   Load user securely
+  */
+function goxeed_user_secure_load ($uid)
+{
+    $result = user_load($uid);
+    if (!$result)
+    {
+      watchdog ('goxeed', 'User id '.$uid. ' was not found.', array() ,WATCHDOG_ERROR);
+    }
+    return $result;
+}
+
+
+/**
+  *   Load node securely
+  */
+function goxeed_node_secure_load ($nid)
+{
+    $result = node_load($nid);
+    if (!$result)
+    {
+      global $user;
+      watchdog ('goxeed', 'Node id '.$nid. ' was not found. User id: '.$user->uid,array(),WATCHDOG_ERROR);
+    }
+    return $result;
+}
+
+/**
+  *   Get items but check, that the entity exists first
+  */
+function goxeed_field_secure_get_items ($entity_type, $entity, $field)
+{
+  $result = NULL;
+  if ($entity)
+  {
+    $result = field_get_items($entity_type, $entity, $field);
+  }
+  else
+  {
+    watchdog ('goxeed', ''.$entity_type.' missing in search for '.$field,array(),WATCHDOG_ERROR);
+  }
+  return $result;
 }
 

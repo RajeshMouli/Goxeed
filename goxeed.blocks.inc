@@ -2,7 +2,7 @@
 
 /**
  * This file defines the blocks of the GoXeed system.
- * 
+ *tt
  * Written 2012 by Nicolas Kristoffersen (nicolaskristoffersen.com) at Wemind (wemind.dk)
  */
 
@@ -11,7 +11,7 @@
  * Implements hook_block_info()
  */
 function goxeed_block_info() {
-
+  
   $blocks = array();
   $blocks['goxeed_points'] = array(
       'info' => t('GoXeed Points'),
@@ -76,6 +76,7 @@ function goxeed_block_info() {
  */
 function goxeed_block_view($delta = '')
 {
+  
   $block = array();
   switch ($delta) {
     case 'goxeed_points': $block = goxeed_goxeed_block_points(); break;
@@ -105,7 +106,7 @@ function goxeed_goxeed_block_points()
   $points_temp = "";
   if (arg(0) == "node")
   {
-    $node = node_load (arg(1));
+    $node = goxeed_node_secure_load (arg(1));
     if ($node)
     {
       if ($node->type == "goxeed_game_user" || $node->type == "goxeed_mission_user" || $node->type == "goxeed_challenge_user")
@@ -114,7 +115,7 @@ function goxeed_goxeed_block_points()
         $user_uid_current_page = goxeed_goxeed_user_uid_current_page();
         if ($user->uid != $user_uid_current_page)
         {
-          $user_object = user_load($user_uid_current_page);
+          $user_object = goxeed_user_secure_load($user_uid_current_page);
           $name = goxeed_real_name ($user_object);
         }
       }
@@ -127,8 +128,8 @@ function goxeed_goxeed_block_points()
       {
         //$points = t("in this challenge");
         //$points_temp = goxeed_challenge_user_points($node->nid);
-        $items = field_get_items ("node", $node, "field_goxeed_mission_user_nid");
-        $node = node_load ($items[0]["value"]);
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");
+        $node = goxeed_node_secure_load ($items[0]["value"]);
       }
 
       if ($node->type == "goxeed_mission_user")
@@ -145,12 +146,12 @@ function goxeed_goxeed_block_points()
   {
     global $user;
     $user_uid_current_page = goxeed_goxeed_user_uid_current_page();
-    $user_object = user_load($user_uid_current_page);
+    $user_object = goxeed_user_secure_load($user_uid_current_page);
     if ($user->uid != $user_uid_current_page)
     {
       $name = goxeed_real_name ($user_object);
     }
-    $items = field_get_items ("user", $user_object, "field_goxeed_user_points");
+    $items = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_user_points");
     $points_temp = $items[0]["value"];
     $points = t("in total");
   }
@@ -177,7 +178,7 @@ function goxeed_goxeed_block_header()
   $block = array();
   unset($block['subject']);
   $user_image_html = "";
-  $user_object = user_load($user->uid);
+  $user_object = goxeed_user_secure_load($user->uid);
   if (isset ($user_object->field_goxeed_li_pic_url["und"]))
     $user_view_mode_top_image = $user_object->field_goxeed_li_pic_url["und"][0]["value"];
   if (isset ($user_object->field_li_prof_url["und"]))
@@ -185,19 +186,19 @@ function goxeed_goxeed_block_header()
   if (isset($user_view_mode_top_image))
     $user_image_html = '<a href="'. url("") .'"><img src="'. $user_view_mode_top_image.'"></a>';
 
-  $items_points = field_get_items ("user", $user_object, "field_goxeed_user_points");
+  $items_points = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_user_points");
   //$user_points = $items_points[0]["value"];
   $user_points = goxeed_user_profile_points ($user_object->uid);
 
   $header = "";
   
-  $badges_html = goxeed_mission_badges_html ($user_object->uid, 5);
+//  $badges_html = goxeed_mission_badges_html ($user_object->uid, 5);
   
-  if (strlen($badges_html)>0)
+/*  if (strlen($badges_html)>0)
   {
       $badges_html = '<ul class ="header block badges">'.$badges_html.'</ul>';
   }
-  
+*/  
   if ($user->uid > 0)
   {
     $header = $header . $user_image_html;
@@ -207,7 +208,7 @@ function goxeed_goxeed_block_header()
     if(isset($user_linkedin_profile_url))  $header = $header . "<li class='linkedin profile'>" . l(t("LinkedIn profile"), $user_linkedin_profile_url, array ("attributes" => array("target" => "_blank"))) . "</li>";
     $header = $header . "<li class='logout'>" . l(t("Log out"), 'user/logout')."</li>";
     $header = $header . "</ul>";
-    $header = $header . $badges_html;
+ //   $header = $header . $badges_html;
   }
 
   $block['content'] = $header;
@@ -226,30 +227,30 @@ function goxeed_goxeed_block_breadcrumbs()
   $result = "";
   if (arg(0) == "node") if (is_numeric(arg(1)))
   {
-    $node = node_load (arg(1));
+    $node = goxeed_node_secure_load (arg(1));
     if ($node->type == "goxeed_challenge_user")
     {
       $link = "node/".$node->nid;
-      $mission_user = field_get_items("node", $node, "field_goxeed_mission_user_nid");
-      $challenge = field_get_items("node", $node, "field_goxeed_challenge_nid");
-      $node = node_load ($challenge[0]["value"]);
+      $mission_user = goxeed_field_secure_get_items("node", $node, "field_goxeed_mission_user_nid");
+      $challenge = goxeed_field_secure_get_items("node", $node, "field_goxeed_challenge_nid");
+      $node = goxeed_node_secure_load ($challenge[0]["value"]);
       $result = "<li class='goxeed trail challenge'>".t("Challenge").": ".l($node->title, $link)."</li>";
-      $node = node_load ($mission_user[0]["value"]);
+      $node = goxeed_node_secure_load ($mission_user[0]["value"]);
     }
     if ($node->type == "goxeed_mission_user")
     {
       $link = "node/".$node->nid;
-      $game_user = field_get_items("node", $node, "field_goxeed_game_user_nid");
-      $mission = field_get_items("node", $node, "field_goxeed_mission_nid");
-      $node = node_load ($mission[0]["value"]);
+      $game_user = goxeed_field_secure_get_items("node", $node, "field_goxeed_game_user_nid");
+      $mission = goxeed_field_secure_get_items("node", $node, "field_goxeed_mission_nid");
+      $node = goxeed_node_secure_load ($mission[0]["value"]);
       $result = "<li class='goxeed trail mission'>".t("Mission").": ".l($node->title, $link)."</li>".$result;
-      $node = node_load ($game_user[0]["value"]);
+      $node = goxeed_node_secure_load ($game_user[0]["value"]);
     }
     if ($node->type == "goxeed_game_user")
     {
       $link = "node/".$node->nid;
-      $game = field_get_items("node", $node, "field_goxeed_game_nid");
-      $node = node_load ($game[0]["value"]);
+      $game = goxeed_field_secure_get_items("node", $node, "field_goxeed_game_nid");
+      $node = goxeed_node_secure_load ($game[0]["value"]);
       $result = "<li class='goxeed trail game'>".t("Game").": ".l($node->title, $link)."</li>".$result;
     }
   }
@@ -279,20 +280,20 @@ function goxeed_goxeed_user_uid_current_page()
   {
     if (is_numeric (arg(1)))
     {
-      $node = node_load (arg(1));
+      $node = goxeed_node_secure_load (arg(1));
       if ($node->type == "goxeed_challenge_user")
       {
-        $items = field_get_items ("node", $node, "field_goxeed_mission_user_nid");
-        $node = node_load ($items[0]["value"]);
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");
+        $node = goxeed_node_secure_load ($items[0]["value"]);
       }
       if ($node->type == "goxeed_mission_user")
       {
-        $items = field_get_items ("node", $node, "field_goxeed_game_user_nid");
-        $node = node_load ($items[0]["value"]);
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");
+        $node = goxeed_node_secure_load ($items[0]["value"]);
       }
       if ($node->type == "goxeed_game_user")
       {
-        $items = field_get_items ("node", $node, "field_goxeed_user_uid");
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_user_uid");
         $user_uid = $items[0]["value"];
       }
     }
@@ -314,21 +315,21 @@ function goxeed_goxeed_user_uid_current_page()
 function goxeed_goxeed_game_current($node_nid)
 {
   $result = NULL;
-  $node = node_load ($node_nid);
+  $node = goxeed_node_secure_load ($node_nid);
   if ($node->type == "goxeed_challenge_user")
   {
-    $items = field_get_items ("node", $node, "field_goxeed_challenge_nid");
-    $node = node_load ($items[0]["value"]);
+    $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_challenge_nid");
+    $node = goxeed_node_secure_load ($items[0]["value"]);
   }
   if ($node->type == "goxeed_challenge" || $node->type == "goxeed_mission_user")
   {
-    $items = field_get_items ("node", $node, "field_goxeed_mission_nid");
-    $node = node_load ($items[0]["value"]);
+    $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");
+    $node = goxeed_node_secure_load ($items[0]["value"]);
   }
 
   if ($node->type == "goxeed_mission" || $node->type == "goxeed_game_user")
   {
-    $items = field_get_items ("node", $node, "field_goxeed_game_nid");
+    $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");
     $result = $items[0]["value"];
   }
   if ($node->type == "goxeed_game")
@@ -350,12 +351,12 @@ function goxeed_goxeed_block_currently_playing()
   if (arg(0) == "user") if (is_numeric(arg(1)))
   {
     $result = "";
-    $user_object = user_load (goxeed_goxeed_user_uid_current_page());
-    $game_users = field_get_items ("user", $user_object, "field_goxeed_game_user_nid");
+    $user_object = goxeed_user_secure_load (goxeed_goxeed_user_uid_current_page());
+    $game_users = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_game_user_nid");
     if ($game_users) foreach ($game_users as $game_user)
     {
-      if (goxeed_game_challenges_remaining($game_user["value"]) > 0)
-        $result = $result . "<li>" . l(goxeed_goxeed_game_user_game_title($game_user["value"]), "node/".$game_user["value"]) . "</li>";
+      if (goxeed_game_user_challenges_remaining($game_user["value"]) > 0)
+        $result = $result . "<li>" . l(goxeed_game_user_game_title($game_user["value"]), "node/".$game_user["value"]) . "</li>";
 
     }
     if ($result != "")
@@ -382,12 +383,12 @@ function goxeed_goxeed_block_has_completed()
   if (arg(0) == "user") if (is_numeric(arg(1)))
   {
     $result = "";
-    $user_object = user_load (goxeed_goxeed_user_uid_current_page());
-    $game_users = field_get_items ("user", $user_object, "field_goxeed_game_user_nid");
+    $user_object = goxeed_user_secure_load (goxeed_goxeed_user_uid_current_page());
+    $game_users = goxeed_field_secure_get_items ("user", $user_object, "field_goxeed_game_user_nid");
     if ($game_users) foreach ($game_users as $game_user)
     {
-      if (goxeed_game_challenges_remaining($game_user["value"]) == 0)
-        $result = $result . "<li>" . l(goxeed_goxeed_game_user_game_title($game_user["value"]), "node/".$game_user["value"]) . "</li>";
+      if (goxeed_game_user_challenges_remaining($game_user["value"]) == 0)
+        $result = $result . "<li>" . l(goxeed_game_user_game_title($game_user["value"]), "node/".$game_user["value"]) . "</li>";
     }
     if ($result != "")
     {
@@ -419,8 +420,8 @@ function goxeed_goxeed_block_video()
 
       if ($game_nid)
       {
-        $game = node_load($game_nid);
-        $items = field_get_items ("node", $game, "field_goxeed_video");
+        $game = goxeed_node_secure_load($game_nid);
+        $items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_video");
         $html = $items[0]["value"];
         if (strpos ($html, "youtube.com") > 0)
         {
@@ -456,8 +457,8 @@ function goxeed_goxeed_block_nps()
 
       if ($game_nid)
       {
-        $game = node_load($game_nid);
-        $items = field_get_items ("node", $game, "field_goxeed_nps_score");
+        $game = goxeed_node_secure_load($game_nid);
+        $items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_nps_score");
         $html = $items[0]["value"];
         $block["title"] = t("NPS of the game");
         $block["content"] = $html;
@@ -486,10 +487,10 @@ function goxeed_goxeed_block_links()
 
       if ($game_nid)
       {
-        $game = node_load($game_nid);
+        $game = goxeed_node_secure_load($game_nid);
          
         $html = "";
-        $items = field_get_items ("node", $game, "field_goxeed_link");
+        $items = goxeed_field_secure_get_items ("node", $game, "field_goxeed_link");
         if ($items) foreach ($items as $link)
         {
           $attribute_html = "";
@@ -535,7 +536,7 @@ function goxeed_goxeed_block_top_players()
   {
     if (is_numeric(arg(1)))
     {
-      $node = node_load (arg(1));
+      $node = goxeed_node_secure_load (arg(1));
       if ($node->type == "goxeed_game_user")
       {
         $game_nid = goxeed_goxeed_game_current(arg(1));
