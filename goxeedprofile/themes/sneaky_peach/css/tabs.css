@@ -1,0 +1,98 @@
+/*---------------------------------------------------
+  Tabs
+---------------------------------------------------*/
+
+.tabs {
+  margin-bottom: 20px;
+}
+.tabs ul.primary {
+  padding: 0 3px;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+  background: transparent url(../images/tabs-border.png) repeat-x left bottom;
+}
+.tabs ul.primary li {
+  display: block;
+  float: left; /* LTR */
+  vertical-align: bottom;
+  margin: 0 5px 0 0; /* LTR */
+}
+.tabs ul.primary li.active a {
+  border-bottom: 1px solid #ffffff;
+}
+.tabs ul.primary li a {
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  color:#8da1aa;
+  background-color: #fff;
+  border:1px solid #C6D8CC;
+  height: 1.8em;
+  line-height: 1.9;
+  display: block;
+  font-size: 15px;
+  font-weight:normal;
+  float: left; /* not LTR */
+  padding:2px 24px 2px;
+  margin: 0;
+  text-shadow: 0 -1px 0 #fff;
+  -khtml-border-radius-topleft: 5px;
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -khtml-border-radius-topright: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+  -webkit-transition: background-color .15s ease-in-out;
+  -moz-transition: background-color .15s ease-in-out;
+  -o-transition: background-color .15s ease-in-out;
+}
+.tabs ul.primary li.active a,
+.tabs ul.primary li a:hover,
+.tabs ul.primary li.active a:hover {
+  background-color: #ffffff;
+  color: #465D67;
+}
+.tabs ul.secondary {
+  border-bottom: none;
+  padding:14px 0 0;
+  margin:0 0 40px;
+}
+.tabs ul.secondary li {
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  display: block;
+  float: left; /* LTR */
+  border:none;
+  padding:0 7px;
+}
+.tabs ul.secondary li:last-child {
+  border-right: none; /* LTR */
+}
+.tabs ul.secondary li:first-child {
+  padding-left: 0; /* LTR */
+}
+.tabs ul.secondary li a {
+  padding:5px 10px 4px;
+}
+.tabs ul.secondary li a.active {
+  background: #f2f2f2;
+  border-bottom: none;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+}
+ul.action-links {
+  list-style: none;
+  margin: 5px;
+  padding: 0.5em 1em;
+}
+ul.action-links li {
+  display: inline-block;
+  margin-left: 10px;
+}
+ul.action-links li a {
+  padding-left: 15px;
+  background: url(../images/add.png) no-repeat left center;
+  margin: 0 10px 0 0;
+}

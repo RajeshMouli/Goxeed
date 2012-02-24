@@ -1,0 +1,135 @@
+/*--------------------------------------------------
+	Default font
+--------------------------------------------------*/
+html {
+  font-size: 100%; 
+  -webkit-text-size-adjust: 100%; 
+  -ms-text-size-adjust: 100%; 
+}
+
+body {
+  background: #fff; 
+  font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif; 
+  font-size: 13px; 
+  line-height: 20px; 
+  color: #333; 
+  position: relative; 
+  -webkit-font-smoothing: antialiased;
+}
+
+/*--------------------------------------------------
+	Links
+--------------------------------------------------*/
+	a { color: #2a85e8; text-decoration: none; line-height: inherit; }
+	a:hover { color: #11639d; }
+	a:focus { color: #cc4714; outline: none; }
+	p a, p a:visited { line-height: inherit; }
+	
+
+/*--------------------------------------------------
+	Lists
+--------------------------------------------------*/
+	ul, ol { margin-bottom: 18px; }
+	ul { list-style:disc; }
+	ol { list-style: decimal; }
+	ol, ul.square, ul.circle, ul.disc { margin-left: 30px; }
+	ul.square { list-style: square outside; }
+	ul.circle { list-style: circle outside; }
+	ul.disc { list-style: disc outside; }
+	li { margin-bottom: 8px; }
+	ul.large li { line-height: 21px; }
+
+/*--------------------------------------------------
+  Typography
+--------------------------------------------------*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: MuseoSansRounded300, "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif; 
+  color: #333; 
+  font-weight: normal; 
+  line-height: 1.25;
+}
+  
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit;}
+h2, h3, h4, h5, h6 {font-family: MuseoSansRounded700, "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif; }
+h1 { font-size: 31px; margin-bottom:22px; line-height:1.2}
+h2 { font-size: 21px; margin-bottom: 9px; }
+h3 { font-size: 15px; margin-bottom: 9px; }
+h4 { font-size: 17px; margin-bottom: 9px; }
+h5 { font-size: 17px; margin-bottom: 9px; }
+h6 { font-size: 17px; }
+
+#name-and-slogan h1 {margin-bottom:0 !important;}
+
+.subheader { color: #777; font-weight: 300; margin-bottom: 24px; }
+
+p { line-height: 20px; margin: 0 0 14px; }
+p img { margin: 0; }
+p.lead { font-size: 18px; font-size: 1.8rem; line-height: 24px;  }
+
+em, i { font-style: italic; line-height: inherit; }
+strong, b { font-weight: bold; line-height: inherit; }
+small { font-size: 60%; line-height: inherit; }
+
+h1 small, h2 small, h3 small, h4 small, h5 small { color: #777; }
+
+/*	Blockquotes  */
+blockquote, blockquote p { line-height: 20px; color: #777; }
+blockquote { margin: 0 0 18px; padding: 9px 20px 0 19px; border-left: 1px solid #ddd; }
+blockquote cite { display: block; font-size: 12px; font-size: 1.2rem; color: #555; }
+blockquote cite:before { content: "\2014 \0020"; }
+blockquote cite a, blockquote cite a:visited { color: #555; }
+
+hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 12px 0 18px; height: 0; }
+
+abbr, acronym { text-transform: uppercase; font-size: 90%; color: #222; border-bottom: 1px solid #ddd; cursor: help; }
+abbr { text-transform: none; }
+
+/*--------------------------------------------------
+	Tables
+--------------------------------------------------*/
+	table { 
+    background: #fff;
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px; 
+    border-radius: 3px; 
+    margin: 0 0 18px; 
+    border:none; 
+    width:100%;
+    }
+    
+  form .field-multiple-table{
+    margin:0 0 4px;
+  }
+
+	table tfoot { background: #fff}
+	
+  table thead tr th,
+	table tfoot tr th,
+	table tbody tr td,
+	table tr td,
+	table tfoot tr td { font-size: 13px; line-height: 20px; text-align: left; }
+	
+  table thead tr th,
+	table tfoot tr td { padding: 7px 10px 8px; font-size: 13px; font-weight: bold; color: #333; }
+	table thead tr th:last-child, table tfoot tr td:last-child { border-right: none; }
+
+	table tbody tr.even,
+  tr.even, 
+  tr.odd,
+	table tbody tr.alt { background: #fff; border:none; border-bottom:1px solid #e0e8ec; padding: 7px 10px 8px;}
+	table tbody tr td { color: #333; padding: 9px 10px; vertical-align: top; border: none; }
+  
+  /* table tbody tr.odd{background:#f9f9f9;} */
+  table thead,
+  table thead tr th{
+    background:#fff; 
+    border-bottom:1px solid #BECAD0;
+    text-shadow:none;
+    padding:0 0 2px;
+  }
+
+/*--------------------------------------------------
+	Selection style
+--------------------------------------------------*/
+  ::-moz-selection { background: #5cc200; color: #fff; text-shadow: none; }
+  ::selection { background: #5cc200; color: #fff; text-shadow: none; }

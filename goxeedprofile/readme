@@ -1,0 +1,8 @@
+1. Download Drupal from drupal.org
+2. Place the files in this directory in Drupals profiles folder
+3. Run the Drupal installation
+4. Create a LinkedIn API KEY and enter it in the LinkedIn module configuration
+5. Ask the GoXeed administrator to log in using LinkedIn from the front page
+6. Go to user administration
+7. Edit the user, that needs to be GoXeed administrator and check Goxeed Admin
+8. Log out the Drupal Admin. It should only be use again for updates or configuration. Never for the game.

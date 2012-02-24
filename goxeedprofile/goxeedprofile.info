@@ -1,0 +1,14 @@
+; $Id: goxeedprofile.info,v 1.0 2012/02/23 15:08:34 nicolaskristoffersen.com Exp $
+name = Goxeed Profile
+description = Installs the Goxeed system including the Goxeed module and the Sneaky Peach theme
+version = VERSION
+core = 7.x
+dependencies[] = block
+dependencies[] = dblog
+dependencies[] = linkedin
+dependencies[] = linkedin_auth
+dependencies[] = linkedin_profile
+dependencies[] = oauth_common
+dependencies[] = goxeed
+files[] = goxeedprofile.profile
+

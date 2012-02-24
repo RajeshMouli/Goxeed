@@ -1,0 +1,572 @@
+/*--------------------------------------------------
+	Global elements
+--------------------------------------------------*/
+html{
+  background: #fff;
+}
+
+body{
+  background: #fff url(../images/goxeed_universe.jpg) repeat-x center bottom;
+  min-height:560px;
+}
+
+#page-wrapper{
+    background: transparent url(../images/clouds.jpg) repeat-x 30% top;
+    position:relative;
+}
+
+
+#cloud {
+    background: transparent url(../images/single_cloud.png) no-repeat 0 0;
+    position:absolute;
+	top:-9px;
+    left:30%;
+    width:202px;
+    height:47px;
+    text-indent:-9999px;
+}
+
+h1#page-title em { font-style:normal; }
+#main-wrapper{padding:40px 0 320px;}
+
+#sidebar-second p {
+  margin:0;
+}
+
+/*--------------------------------------------------
+	Header
+--------------------------------------------------*/
+#header {
+  height:70px;
+  background:#42b4e6;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin:26px 0 0;
+  position:relative;  
+}
+
+#name-and-slogan{
+  width:200px;
+}
+
+#site-name a{
+  background-image:url(../images/goxeed_logo.png);
+  background-position:15px 12px;
+  height:70px;
+  width:140px;
+}
+
+/* linked in user info */
+.region-header{
+  float:right;
+  height:70px;
+  width:300px;
+  position:relative;
+  margin-top:-70px;
+}
+
+#block-goxeed-goxeed-header{
+  height:46px;
+  background:#252d31;
+  padding:12px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#block-goxeed-goxeed-header img{
+  height:46px;
+  width:46px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  
+}
+
+#block-goxeed-goxeed-header img:hover{
+  -webkit-box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.6);
+}
+
+#block-goxeed-goxeed-header ul{
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  top:10px;
+  left:70px;
+}
+
+#block-goxeed-goxeed-header ul li{
+  margin:2px 0 0;
+  padding:0;
+  font-size:11px;
+  line-height:17px;
+  color:#fff;
+}
+
+#block-goxeed-goxeed-header ul li a{
+  color:#fff;
+}
+
+#block-goxeed-goxeed-header ul li a:hover{
+  text-decoration:underline;
+}
+
+/* Name */
+#block-goxeed-goxeed-header ul li.name{
+  position:absolute;
+  top:10px;
+  left:70px;
+}
+
+/* Logout link */
+#block-goxeed-goxeed-header ul li.logout a{
+  display:inline-block;
+  padding:3px 8px 4px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  position:absolute;
+  top:0;
+  right:0;
+  color:#bccad1;
+  text-decoration:none;
+  text-shadow:0 1px 0 rgba(0, 0, 0, .3);
+  background: rgb(93,119,130); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(93,119,130,1) 0%, rgba(65,80,88,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(93,119,130,1)), color-stop(100%,rgba(65,80,88,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(93,119,130,1) 0%,rgba(65,80,88,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(93,119,130,1) 0%,rgba(65,80,88,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(93,119,130,1) 0%,rgba(65,80,88,1) 100%); /* IE10+ */
+  background: linear-gradient(top, rgba(93,119,130,1) 0%,rgba(65,80,88,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5d7782', endColorstr='#415058',GradientType=0 ); /* IE6-9 */
+}
+
+#block-goxeed-goxeed-header ul li.logout a:hover{
+  color:#fff;
+}
+
+/* Points */
+#block-goxeed-goxeed-header ul li.points{
+  font-weight:bold;
+}
+
+/*--------------------------------------------------
+	Trail (breadcrumbs)
+--------------------------------------------------*/
+#block-goxeed-goxeed-breadcrumbs ul{
+  list-style-type:none;
+  margin:4px 0 0;
+  padding:0;
+  color:#6f8590;
+}
+
+#block-goxeed-goxeed-breadcrumbs ul li{
+  margin:0;
+  padding:0;
+  background:#c7d9e2;
+  border-top:none;
+  padding:2px 14px 4px;
+  margin:1px 0 0;
+}
+
+#block-goxeed-goxeed-breadcrumbs ul li a{ 
+  color:#43555e;
+}
+#block-goxeed-goxeed-breadcrumbs ul li a:hover{ 
+  text-decoration:underline;
+}
+
+#block-goxeed-goxeed-breadcrumbs ul li:first-child{
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+#block-goxeed-goxeed-breadcrumbs ul li:last-child{
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#block-goxeed-goxeed-breadcrumbs ul li.mission{
+  padding-left:38px;
+  background:#d6e3ea url(../images/nested.png) no-repeat 24px 6px !important;
+}
+
+#block-goxeed-goxeed-breadcrumbs ul li.challenge{
+  padding-left:64px;
+  background:#e6eef2 url(../images/nested.png) no-repeat 49px 6px;
+}
+
+/*--------------------------------------------------
+	Page: Login
+--------------------------------------------------*/
+.custom-page-user-login #user-login ul{
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+.custom-page-user-login #user-login ul li{
+  padding:0;
+  display:inline;
+  margin:0 20px 0 0;
+}
+
+.custom-page-user-login #user-login ul li.linkedin{
+  background:url(../images/linkedin.png) no-repeat 0 0;
+  padding-left:22px;
+  margin:0 20px 0 0;
+  font-weight:bold;
+}
+
+/*--------------------------------------------------
+	Page: User profile
+--------------------------------------------------*/
+#user-profile-page ul,
+#experiences li {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+
+#user-profile-page img,
+#experiences img{
+  width:46px;
+  height:46px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.5);
+  float:left;
+}
+
+#user-profile-page .username h2 {
+  font-size: 31px; margin-bottom: 22px; line-height:1.2;
+  font-family: MuseoSansRounded300, "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  color:#333;
+  padding:3px 0 0 58px;
+}
+
+#user-profile-page .linkedin.description {
+  clear:both;
+  padding:10px 0 0;
+}
+
+#user-profile-page .linkedin.profile.link {
+  margin:0 0 40px;
+}
+
+#user-profile-page a.linkedin{
+  background:url(../images/linkedin.png) no-repeat 0 0;
+  padding-left:22px;
+}
+
+/* Experiences */
+#experiences{
+  margin-bottom:30px;
+}
+
+#experiences h3 {
+  border-bottom:1px solid #BECAD0;
+  font-size: 17px;
+  padding: 0 0 2px;
+  color: #8DA1AA;
+  margin-bottom:9px;
+}
+
+#experiences li {
+  min-height:46px;
+  margin:0;
+  padding: 9px 0 10px 60px;
+  border-bottom:1px solid #e0e8ec;
+}
+
+#experiences li img{
+  margin-left:-60px;
+}
+
+#experiences li p {margin:0;}
+
+#experiences li b {}
+
+/*--------------------------------------------------
+	Page: Game & Mission
+--------------------------------------------------*/
+.node-type-goxeed-game-user .content h2,
+.node-type-goxeed-mission-user .content h2{
+  border-bottom:1px solid #BECAD0;
+  margin-top:20px;
+}
+
+.node-type-goxeed-game-user .content ul{
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+
+.node-type-goxeed-game-user .content ul li.mission,
+table.goxeed.mission.challenges tr{
+  display:block;
+  background:#e9f0f3;
+  margin:0 0 6px;
+  padding:0;
+  color:#7C929C;
+  text-shadow:0 -1px 0 rgba(255,255,255,.5);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: background-color .15s ease-in-out;
+  -moz-transition: background-color .15s ease-in-out;
+  -o-transition: background-color .15s ease-in-out;
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+.node-type-goxeed-game-user .content ul li.mission:hover,
+table.goxeed.mission.challenges tr:hover{
+  background:#dbe7ec;
+  color:#495B64;
+  -webkit-box-shadow: 0px 1px 0 0 #B1C4CD;
+  -moz-box-shadow: 0px 1px 0 0 #B1C4CD;
+  box-shadow: 0px 1px 0 0 #B1C4CD;
+  cursor:pointer;
+}
+
+.node-type-goxeed-game-user .content ul li.mission,
+table.goxeed.mission.challenges tr td{
+  padding:11px 14px 9px !important;
+  width:80%;
+}
+
+table.goxeed.mission.challenges tr td.points {
+	width:20%;
+}
+
+.node-type-goxeed-game-user .content ul li.mission h3 { margin-bottom:5px; }
+
+.node-type-goxeed-game-user .content ul li.mission .mission.property {
+  display:inline;
+  margin-right:10px;
+  padding-right:10px;
+  border-right:1px solid #98ACB5;
+}
+
+.node-type-goxeed-game-user .content ul li.mission .mission.property:last-child {
+  border:none;
+}
+
+/* Challenges */
+table.goxeed.mission.challenges tbody tr td.name {
+  font-size: 15px;
+  font-family: MuseoSansRounded700, "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  color: #333;
+  line-height: 1.25;
+  margin-bottom:5px;
+  padding:0;
+}
+
+table.goxeed.mission.challenges tbody tr td {
+  padding-top:0;
+  padding-bottom:0;
+}
+
+table.goxeed.mission.challenges tbody tr {position:relative;}
+
+.node-type-goxeed-challenge-user #content h3 {
+	margin-top:20px;
+}
+
+  /* checkmark */
+  table.goxeed.mission.challenges tbody tr td.icon span{
+    display:block;
+    text-indent:-9999px;
+    width:24px;
+    height:24px;
+    background:none;
+    padding:0;
+    float:right;
+  }
+  table.goxeed.mission.challenges tbody tr td.icon span.check{
+    background:transparent url(../images/tickmark.png) no-repeat 0 0;
+  }
+  
+/* Icons */
+li.mission {
+    background-image: url(../images/icons/shinazzpatazz.png) !important;
+    background-repeat: no-repeat !important;
+    background-position: 13px 14px !important;
+}
+
+.node-type-goxeed-game-user .content li.mission.icon {
+    padding-left: 57px !important;
+}
+
+
+.node-type-goxeed-mission-user .category {
+    text-indent:-9999px;
+    height:32px;
+    width:32px;
+    display:block;
+    position:absolute;
+    top:0;
+}
+
+/* Puch page title to make rook for mission icon */
+.node-type-goxeed-mission-user #page-title {
+    padding-left:42px;
+}
+
+    li.mission.mouth, 
+	.node-type-goxeed-mission-user .category.mouth { background-image: url(../images/icons/mouth.png) !important; }
+    
+	li.mission.ear,
+	.node-type-goxeed-mission-user .category.ear	{ background-image: url(../images/icons/ear.png) !important; }
+    
+	li.mission.light,
+	.node-type-goxeed-mission-user .category.light { background-image: url(../images/icons/light.png) !important; }
+    
+	li.mission.graph_up,
+	.node-type-goxeed-mission-user .category.graph_up	{ background-image: url(../images/icons/graph_up.png) !important; }
+    
+	li.mission.education,
+	.node-type-goxeed-mission-user .category.education { background-image: url(../images/icons/education.png) !important; }
+    
+	li.mission.star_2,
+	.node-type-goxeed-mission-user .category.star_2 { background-image: url(../images/icons/star_2.png) !important; }
+    
+	li.mission.gift,
+	.node-type-goxeed-mission-user .category.gift	{ background-image: url(../images/icons/gift.png) !important; }
+    
+	li.mission.electrical_energy,
+	.node-type-goxeed-mission-user .category.electrical_energy { background-image: url(../images/icons/electrical_energy.png) !important; }
+    
+	li.mission.time,
+	.node-type-goxeed-mission-user .category.time{ background-image: url(../images/icons/time.png) !important; }
+    
+	li.mission.earth_america,
+	.node-type-goxeed-mission-user .category.earth_america	{ background-image: url(../images/icons/earth_america.png) !important; }
+    
+	li.mission.suitcase,
+	.node-type-goxeed-mission-user .category.suitcase { background-image: url(../images/icons/suitcase.png) !important; }
+    
+	li.mission.pen,
+	.node-type-goxeed-mission-user .category.pen { background-image: url(../images/icons/pen.png) !important; }
+    
+	li.mission.book
+	.node-type-goxeed-mission-user .category.book { background-image: url(../images/icons/book.png) !important; }
+    
+	li.mission.tools
+	.node-type-goxeed-mission-user .category.tools { background-image: url(../images/icons/tools.png) !important; }
+    
+	li.mission.key,
+	.node-type-goxeed-mission-user .category.key	{ background-image: url(../images/icons/key.png) !important; }
+    
+	li.mission.ruler,
+	.node-type-goxeed-mission-user .category.ruler	{ background-image: url(../images/icons/ruler.png) !important; }
+    
+	li.mission.microphone,
+	.node-type-goxeed-mission-user .category.microphone { background-image: url(../images/icons/microphone.png) !important; }
+    
+	li.mission.Seat,
+	.node-type-goxeed-mission-user .category.Seat	{ background-image: url(../images/icons/seat.png) !important; }
+    
+	li.mission.seat,
+	.node-type-goxeed-mission-user .category.seat { background-image: url(../images/icons/seat.png) !important; }
+    
+	li.mission.umbrella,
+	.node-type-goxeed-mission-user .category.umbrella { background-image: url(../images/icons/umbrella.png) !important; }
+    
+	li.mission.food_and_beverages,
+	.node-type-goxeed-mission-user .category.food_and_beverages { background-image: url(../images/icons/food_and_beverages.png) !important; }
+
+
+/* Leader board */
+table.goxeed.leaderboard tbody tr td {
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+table.goxeed.leaderboard tbody tr td.position {
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  font-size:11px;
+  background:#72828a;
+  color:#fff;
+  display:inline-block;
+  width:20px;
+  height:20px;
+  text-align:center;
+  line-height:21px;
+  margin:0 -5px 0 0;
+  padding:0;
+  -webkit-box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
+  -moz-box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
+  box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
+  text-shadow:0 0 3px rgba(0, 0, 0, .3);
+  position:relative;
+  top:9px;
+}
+
+table.goxeed.leaderboard tbody tr:first-child td.position {
+  background:#3a4a51;
+}
+
+table.goxeed.leaderboard tbody tr:first-child td.name a {
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+table.goxeed.leaderboard tbody tr {
+
+}
+
+/* Extra buttons */
+#goxeed_show_extra {
+  margin:0 0 20px;
+  font-size:11px;
+}
+
+#goxeed_show_extra a {
+  margin:0 2px;
+}
+
+/*--------------------------------------------------
+	Counter
+--------------------------------------------------*/
+#javascript_countdown_time {
+	font-family:  Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+	background:none;
+	padding:11px 0 10px;
+	margin-top:20px;
+	text-align:center;
+	moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 2px solid #E9F0F3;
+}
+
+/*--------------------------------------------------
+	Page: Mission
+--------------------------------------------------*/
+
+
+/*--------------------------------------------------
+	Misc
+--------------------------------------------------*/
+html{overflow-y: scroll; }

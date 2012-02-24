@@ -1,0 +1,11 @@
+/* -------------------------------------------------- 
+  Display none (The drupal way...)
+---------------------------------------------------*/
+
+#header #main-menu,
+.tabledrag-toggle-weight-wrapper,
+#edit-preview,
+.not-logged-in.page-user #sidebar-second
+{
+  display:none;
+}

@@ -1,0 +1,45 @@
+name = Sneaky Peach
+description = A peachy theme by Wemind for the Goxeed project.
+package = Core
+version = 1.0
+core = 7.x
+
+stylesheets[all][] = css/reset.css
+stylesheets[all][] = css/fonts.css
+stylesheets[all][] = css/typography.css
+stylesheets[all][] = css/grid.css
+stylesheets[all][] = css/main.css
+stylesheets[all][] = css/buttons.css
+stylesheets[all][] = css/forms.css
+stylesheets[all][] = css/blocks.css
+stylesheets[all][] = css/messages.css
+stylesheets[all][] = css/tabs.css
+stylesheets[all][] = css/responsiveness.css
+stylesheets[all][] = css/helper_classes.css
+stylesheets[all][] = css/menu_tree.css
+stylesheets[all][] = css/display_none.css
+stylesheets[print][] = css/print.css
+
+regions[header] = Header
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[highlighted] = Highlighted
+
+regions[featured] = Featured
+regions[content] = Content
+regions[sidebar_second] = Sidebar second
+
+; regions[footer_firstcolumn] = Footer first column
+: regions[footer_secondcolumn] = Footer second column
+; regions[footer_thirdcolumn] = Footer third column
+; regions[footer_fourthcolumn] = Footer fourth column
+; regions[footer] = Footer
+
+settings[shortcut_module_link] = 0
+
+features[] = name
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = main_menu
+features[] = secondary_menu

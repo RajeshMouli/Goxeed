@@ -1,0 +1,185 @@
+/* -------------------------------------------------- 
+  Blocks
+---------------------------------------------------*/
+
+/*Global*/
+.block h2{
+  font-size:17px;
+  padding:0 0 2px;
+  color:#8da1aa;
+}
+
+#sidebar-second .block{
+  margin:0 0 26px;
+}
+#sidebar-second .block h2{
+  border-bottom:1px solid #BECAD0;
+}
+
+/* Blocks with "lists" */
+#block-goxeed-goxeed-links .content a,
+#block-goxeed-goxeed-has-completed .content a,
+#block-goxeed-goxeed-currently-playing .content a {
+  display:block;
+  background:#e9f0f3;
+  margin:0 0 4px;
+  padding:3px 12px 3px;
+  color:#7C929C;
+  text-shadow:0 -1px 0 rgba(255,255,255,.5);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: background-color .15s ease-in-out;
+  -moz-transition: background-color .15s ease-in-out;
+  -o-transition: background-color .15s ease-in-out;
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  font-size:11px;
+}
+
+#block-goxeed-goxeed-links .content a:hover,
+#block-goxeed-goxeed-has-completed .content a:hover,
+#block-goxeed-goxeed-currently-playing .content a:hover {
+  background:#dbe7ec;
+  color:#495B64;
+  -webkit-box-shadow: 0px 1px 0 0 #B1C4CD;
+  -moz-box-shadow: 0px 1px 0 0 #B1C4CD;
+  box-shadow: 0px 1px 0 0 #B1C4CD;
+}
+
+/* user has completed... */
+#block-goxeed-goxeed-has-completed .content a {
+  background:#f3f3f3;
+  color:#9C9C9C;
+}
+
+#block-goxeed-goxeed-has-completed .content a:hover {
+  background:#EBEBEB;
+  color:#616161;
+  -webkit-box-shadow: 0px 1px 0 0 #ccc;
+  -moz-box-shadow: 0px 1px 0 0 #ccc;
+  box-shadow: 0px 1px 0 0 #ccc;
+}
+
+/* So far user has earned points... */
+#block-goxeed-goxeed-points h2 {
+  display:none;
+}
+
+#block-goxeed-goxeed-points .content {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border:2px solid #e9f0f3;
+  padding:12px 14px 10px;
+  font-size:13px;
+  text-align:center;
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+#block-goxeed-goxeed-points .content span {
+  display:block;
+  font-size:21px;
+  margin:6px 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding:6px 10px 7px;
+  background:#9ad178;
+  color:#fff;
+  text-shadow:0 1px 0 #70905d;
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+/* Top players */
+#block-goxeed-goxeed-top-players {
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  font-size:13px;
+}
+
+#block-goxeed-goxeed-top-players ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+
+#block-goxeed-goxeed-top-players ul li{
+  margin:4px 0 5px;
+  padding:0;
+  list-style-type:none;
+}
+
+#block-goxeed-goxeed-top-players ul li .position{
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  font-size:11px;
+  background:#72828a;
+  color:#fff;
+  display:inline-block;
+  width:20px;
+  height:20px;
+  text-align:center;
+  line-height:21px;
+  margin:0 5px 0 -1px;
+  -webkit-box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
+  -moz-box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
+  box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
+  text-shadow:0 0 3px rgba(0, 0, 0, .2);
+}
+
+#block-goxeed-goxeed-top-players ul li:first-child .position{
+  background:#3a4a51;
+}
+
+#block-goxeed-goxeed-top-players ul li:first-child a{
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+#block-goxeed-goxeed-top-players ul li .points{
+  border-left:1px solid #98ACB5;
+  padding-left:6px;
+margin-left:6px;  
+color:#98ACB5;
+}
+
+/* NPS */
+#block-goxeed-goxeed-nps {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border:2px solid #e9f0f3;
+  padding:12px 14px 10px;
+  font-size:13px;
+  text-align:center;
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+#block-goxeed-goxeed-nps h2{
+  font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  border:none !important;
+  font-size:13px;
+  color:#333;
+  margin:0;
+}
+
+#block-goxeed-goxeed-nps .content{
+  display:block;
+  font-size:21px;
+  margin:6px 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding:6px 10px 7px;
+  background:#BECAD0;
+  color:#fff;
+  text-shadow:0 1px 0 #70905d;
+  font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+/* Kill bullets */
+#block-goxeed-goxeed-links li,
+#block-goxeed-goxeed-has-completed li,
+#block-goxeed-goxeed-currently-playing li{
+  list-style-type:none;
+}
