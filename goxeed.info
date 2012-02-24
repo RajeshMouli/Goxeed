@@ -1,0 +1,15 @@
+name = GoXeed
+description = GoXeed
+package = GoXeed Package
+core = 7.x
+dependencies[] = date
+dependencies[] = link
+dependencies[] = list
+dependencies[] = number
+dependencies[] = references
+dependencies[] = user_reference
+dependencies[] = token
+recommends[] = linkedin
+recommends[] = linkedin_auth
+recommends[] = linkedin_profile
+recommends[] = oauth_common

@@ -1,0 +1,410 @@
+<?php
+
+/**
+ * Written 2012 by Nicolas Kristoffersen (nicolaskristoffersen.com) at Wemind (wemind.dk)
+ *
+ * GoXeed is a tool for internal games in organisations.
+ *
+ * The module operates with these different user types.
+ * (- 0. Drupal administrator)
+ *  - 1. System administrator
+ *  - 2. Game administrator
+ *  - 3. Registered user
+ *  - 4. Anonymous user
+ *
+ * The module oprates with there content types
+ *  - 1. Game
+ *  - 2. Game User
+ *  - 3. Mission
+ *  - 4. Mission User
+ *  - 5. Challenge
+ *  - 6. Challenge User
+ *
+ * A system administrator can create games and assign one or more game administrators
+ * A game administrator can change games, create and change missions and create and change challanges
+ * After a game is created a links and pass code should be sent to game users who can then sign up for the game
+ * Registered users can be part of one or more games.
+ *
+ * For additional technical information, please contact nicolas@wemind.dk
+ *
+ */
+
+/**
+ * Implements hook_boot()
+ */
+function goxeed_boot()
+{
+  error_reporting(E_ALL);
+}
+
+/**
+ * Include all .inc files needed for the module
+ */
+function goxeed_goxeed_include ()
+{
+  module_load_include ("inc", "goxeed", "goxeed.blocks");
+  module_load_include ("inc", "goxeed", "goxeed.user_profile");
+  module_load_include ("inc", "goxeed", "goxeed.game");
+  module_load_include ("inc", "goxeed", "goxeed.game_user");
+  module_load_include ("inc", "goxeed", "goxeed.mission");
+  module_load_include ("inc", "goxeed", "goxeed.mission_user");
+  module_load_include ("inc", "goxeed", "goxeed.challenge");
+  module_load_include ("inc", "goxeed", "goxeed.challenge_user");
+}
+
+/**
+ * Implement hook_init()
+ */
+function goxeed_init()
+{
+  // Include all needed .inc files of the module
+  goxeed_goxeed_include();
+
+  // Make sure all authenticated users can see othes profiles
+  user_role_grant_permissions (DRUPAL_AUTHENTICATED_RID, array('access user profiles'));
+
+  global $user;
+  if ($user->uid < 1)
+  {
+    $system_list = system_list('module_enabled');
+    if (array_key_exists('linkedin', $system_list))
+    {
+      if (arg(0) == "node" && strlen(arg(1) > 0))
+      {
+        $_SESSION["goxeed_destination"] = arg(1);
+        drupal_goto ("linkedin/login/0");
+      }
+    }
+  }
+
+  if (arg(0) == "user") if (isset($_SESSION)) if (isset($_SESSION["goxeed_destination"])) if(strlen($_SESSION["goxeed_destination"]) > 0)
+  {
+    $memory_local = $_SESSION["goxeed_destination"];
+    $_SESSION["goxeed_destination"] = "";
+    drupal_goto ("node/".$memory_local);
+  }
+}
+
+/**
+ * Implement hook_node_presave()
+ * 
+ * Implement hook_node_presave, by invoking hook for each content type
+ * The invoked hook is implemented by each content type
+ */
+function goxeed_node_presave($node)
+{
+  module_invoke ("goxeed", "goxeed_" . $node->type."_presave", $node);
+}
+
+/**
+ * hook_node_insert()
+ * 
+ * Implement hook_node_isert by invoking hooks for each content type.
+ * The invoked hook is implemented by each content type
+ */
+function goxeed_node_insert($node)
+{
+  module_invoke ("goxeed", "goxeed_".$node->type."_insert", $node);
+}
+
+
+// *
+// * ACCESS RIGHTS
+// * Implement hook_node_access to control which users can modify which nodes.
+// * This is used for granting game administrators access to modify games
+// *
+
+/**
+ * Implements hook_node_access()
+ * 
+ * Implement hook_node_access to control which users can modify which nodes.
+ * This is used for granting game administrators access to modify games
+ */
+function goxeed_node_access($node, $op, $account)	
+{
+  $result = NODE_ACCESS_IGNORE;
+
+  goxeed_goxeed_include();
+
+  $node_type = "";
+  if (isset($node->type)) $node_type = $node->type;
+  else $node_type = $node;
+
+  $return = module_invoke ("goxeed", "goxeed_".$node_type."_access", $node, $op, $account);
+  if ($return) $result = $return;
+
+  return $result;
+}
+
+/**
+ * Implements hook_user_access
+ */
+function goxeed_user_access ($string, $account)
+{
+
+  drupal_set_message ("goxeed_user_access ".$string);
+
+  $result = FALSE;
+
+  if ($string == "view")
+  {
+    $result = TRUE;
+  }
+
+  return $result;
+}
+
+/**
+ * Implements hook_node_delete()
+ */
+function goxeed_node_delete($node)
+{
+  module_invoke ("goxeed", "goxeed_".$node->type."_delete", $node);
+}
+
+/**
+ * Make automatically created references unchangeble by the user
+ * This is done by implementing hook_form_alter(&$page)...
+ * .. to disable the input field.
+ * Each node type handles this by its own function.
+ */
+
+function goxeed_form_alter(&$form)
+{
+  $form_id = $form["form_id"]["#value"];
+  $function_name = ("goxeed_goxeed_".$form_id."_alter");
+  if (function_exists ($function_name))
+  {
+    $form = call_user_func ($function_name, $form);
+  }
+}
+
+/**
+ * Implement hook_menu_breadcrumb_alter
+ * 
+ * The current page is loaded, at items are added "backwards" through the item tree
+ */
+function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
+{
+  $active_trail = array();																// Clear Drupal internal breadcrumbs
+  global $user;																			// Get global user object
+  $user_local = goxeed_user_secure_load($user->uid);													// Load the logged in user
+  if (arg(0) == "user")																	// If the page is a user..
+  {
+    if (strlen(arg(1)) > 0)	$user_local = goxeed_user_secure_load(arg(1));						// .. load that user instead
+  }
+  else if (arg(0) == "node" && strlen(arg(1)) > 0)										// If the page is a node
+  {
+    $node = goxeed_node_secure_load (arg(1));															// Load the node of the page
+    	
+    if ($node)
+    {
+      // CHALLENGE
+
+      if ($node->type == "goxeed_challenge")													// If the current page is a challenge
+      {
+        array_unshift ($active_trail, array("title" => $node->title,
+            "href" => "node/".$node->nid, "localized_options" => array()));			// Set a breadcrumb item
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get the mission the challenge belongs to ...
+        $node = goxeed_node_secure_load($items[0]["value"]);										// ... and load it
+      }
+      if ($node->type == "goxeed_challenge_user")											// If the current page is a challenge user
+      {
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_challenge_nid");				// Get the challenge node id
+        $node_title = goxeed_node_secure_load($items[0]["value"]);									// ... and load that node to set the title
+        array_unshift ($active_trail, array("title" => $node_title->title,
+            "href" => "node/".$node->nid, "localized_options" => array()));			// Set the breadcrumb item
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");				// Get the mission user node id ...
+        $node = goxeed_node_secure_load($items[0]["value"]);										// ... and load the node
+      }
+
+      // MISSION
+
+      if ($node->type == "goxeed_mission")													// If the current item is a mission
+      {
+        array_unshift ($active_trail, array("title" => $node->title,
+            "href" => "node/".$node->nid, "localized_options" => array()));			// Add the mission to the breadcrumb ..
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get the game id ..
+        $node = goxeed_node_secure_load($items[0]["value"]);										// .. and load the game.
+      }
+      if ($node->type == "goxeed_mission_user")												// If the current item is a mission user ..
+      {
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get mission id
+        $node_title = goxeed_node_secure_load($items[0]["value"]);									// .. load mission node
+        array_unshift ($active_trail, array("title" => $node_title->title,
+            "href" => "node/".$node->nid, "localized_options" => array()));			// Add the breadcrumb item
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");				// Get game user items ..
+        $node = goxeed_node_secure_load($items[0]["value"]);										// .. and load the game user
+      }
+
+      // GAME
+
+      if ($node->type == "goxeed_game")														// If the current item is a game
+      {
+        array_unshift ($active_trail, array("title" => $node->title,
+            "href" => "node/".$node->nid, "localized_options" => array()));			// Add the game to the breadcrumb
+        $user_local = goxeed_user_secure_load($user->uid);										// Load the logged in user
+      }
+      if ($node->type == "goxeed_game_user")
+      {
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get game id
+        $node_title = goxeed_node_secure_load($items[0]["value"]);									// .. load game node
+        array_unshift ($active_trail, array("title" => $node_title->title,
+            "href" => "node/".$node->nid, "localized_options" => array()));			// Add the breadcrumb item
+        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_user_uid");						// Load the game user user items
+        $user_local = goxeed_user_secure_load($items[0]["value"]);									// .. and load the game user user
+      }
+    }
+  }
+
+  // USER
+
+  array_unshift ($active_trail, array("title" => goxeed_real_name($user_local),
+      "href" => "user/".$user_local->uid, "localized_options" => array()));				// Add the user name to the breadcrumb
+}
+
+
+/*
+ * Implement hook_menu_alter()
+ * 
+ * Remember to clear the menu cache after adding/editing this function.
+ * 
+ * In LinkedIn is installed prevent users from editing own profile, to avoid them from unsyncing with their LinkedIn profile
+ */
+function goxeed_menu_alter(&$items) {
+
+  // Removing certain local navigation tabs that are either undesired or need to be custom relocated.
+  $items['user/%user/oauth']['access callback'] = 'goxeed_goxeed_menu_access_callback';
+  $items['user/%user/edit']['access callback'] = 'goxeed_goxeed_menu_access_callback';
+  $items['user/%user/edit/linkedin']['access callback'] = 'goxeed_goxeed_menu_access_callback';
+}
+
+/**
+ * Handle menu access callback to avoid access if LinkedIn is installed
+ */
+function goxeed_goxeed_menu_access_callback()
+{
+  $result = TRUE;
+  global $user;
+  $system_list = system_list('module_enabled');
+  if ($user->uid > 1 && array_key_exists('linkedin', $system_list))
+  {
+    $result = FALSE;
+  }
+  return $result;
+}
+
+/**
+ * Implement hook_theme_registry_alter
+ *
+ * Create callback for theme hooks to be able to act on them in the module
+ */
+function goxeed_theme_registry_alter(&$theme_registry)
+{
+  if (!in_array("goxeed_module_preprocess_page", $theme_registry["page"]["preprocess functions"]))
+    $theme_registry["page"]["preprocess functions"][] = "goxeed_module_preprocess_page";	// Add this modules page preprocess function to the theme
+
+  if (!in_array("goxeed_module_preprocess_node", $theme_registry["node"]["preprocess functions"]))
+    $theme_registry["node"]["preprocess functions"][] = "goxeed_module_preprocess_node";	// Add this modules page preprocess function to the theme
+}
+
+/**
+ * Implement hook_preprocess_node()
+ * 
+ * This function is added to the theme registry in goxeed_theme_registry_alter and so it is called like template_preprocess_node
+ * 
+ * Invoke the same function for the specific node type
+ */
+function goxeed_module_preprocess_node (&$variables)
+{
+  $node = $variables["node"];
+  $variables = module_invoke ("goxeed", "goxeed_preprocess_".$node->type, $variables);
+}
+	
+/**
+ * Implement hook_preprocess_page
+ * 
+ * This function is added to the theme registry in goxeed_theme_registry_alter and so it is called like template_preprocess_page
+ */
+function goxeed_module_preprocess_page (&$variables)
+{
+
+  global $user;
+
+  if (drupal_is_front_page())
+  {
+    if ($user->uid)
+    {
+      drupal_goto ("user");
+    }
+    else
+    {
+      drupal_set_title (t("Welcome to GoXeed"));
+      unset($variables["page"]["content"]);
+      $variables["feed_icons"] = "";
+      $variables["page"]["content"]["system_main"]["goxeed"][0]["#markup"] =
+      drupal_render(drupal_get_form("user_login"));
+      //l(t("Click here to log in with LinkedIn"), "linkedin/login/0");
+    }
+  }
+
+  $show_game_signup = false;																// Page templete boolean to set if game signup form should be showed
+  $game_user_administrator_html = "";														// HTML string to be printed on game_user page if user is admin
+
+  if (isset ($variables["node"])) 														// Check if the current page shows a node
+  {
+    $node = $variables["node"];
+    $variables_alt = module_invoke ("goxeed", "goxeed_preprocess_page_".$node->type, $variables);
+    if ($variables_alt) $variables = $variables_alt;
+  }
+  	
+  if ($user->uid > 1) $variables["secondary_menu"] = array();
+
+}
+
+
+/**
+  *   Load user securely
+  */
+function goxeed_user_secure_load ($uid)
+{
+    $result = user_load($uid);
+    if (!$result)
+    {
+      watchdog ('goxeed', 'User id '.$uid. ' was not found.', array() ,WATCHDOG_ERROR);
+    }
+    return $result;
+}
+
+
+/**
+  *   Load node securely
+  */
+function goxeed_node_secure_load ($nid)
+{
+    $result = node_load($nid);
+    if (!$result)
+    {
+      global $user;
+      watchdog ('goxeed', 'Node id '.$nid. ' was not found. User id: '.$user->uid,array(),WATCHDOG_ERROR);
+    }
+    return $result;
+}
+
+/**
+  *   Get items but check, that the entity exists first
+  */
+function goxeed_field_secure_get_items ($entity_type, $entity, $field)
+{
+  $result = NULL;
+  if ($entity)
+  {
+    $result = field_get_items($entity_type, $entity, $field);
+  }
+  else
+  {
+    watchdog ('goxeed', ''.$entity_type.' missing in search for '.$field,array(),WATCHDOG_ERROR);
+  }
+  return $result;
+}
+
