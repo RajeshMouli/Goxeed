@@ -31,7 +31,7 @@ function goxeedmodule_challenge_user_create($mission_user_nid)
    
   node_save($node_new);																                                // Save the node
    
-  goxeedmodule_mission_user_challenge_user ($mission_user_nid, $node_new->nid);
+  goxeedmodule_mission_user_challenge_user_add ($mission_user_nid, $node_new->nid);
    
   return $node_new;																	                                  // Return the node
 }
