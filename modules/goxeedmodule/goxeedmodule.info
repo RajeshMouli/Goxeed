@@ -1,5 +1,5 @@
-name = GoXeed
-description = GoXeed
+name = GoXeed Module
+description = GoXeed Module
 package = GoXeed Package
 core = 7.x
 dependencies[] = date

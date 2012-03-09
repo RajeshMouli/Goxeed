@@ -32,7 +32,7 @@
 /**
  * Implements hook_boot()
  */
-function goxeed_boot()
+function goxeedmodule_boot()
 {
   error_reporting(E_ALL);
 }
@@ -40,25 +40,28 @@ function goxeed_boot()
 /**
  * Include all .inc files needed for the module
  */
-function goxeed_goxeed_include ()
+function goxeedmodule_goxeedmodule_include ()
 {
-  module_load_include ("inc", "goxeed", "goxeed.blocks");
-  module_load_include ("inc", "goxeed", "goxeed.user_profile");
-  module_load_include ("inc", "goxeed", "goxeed.game");
-  module_load_include ("inc", "goxeed", "goxeed.game_user");
-  module_load_include ("inc", "goxeed", "goxeed.mission");
-  module_load_include ("inc", "goxeed", "goxeed.mission_user");
-  module_load_include ("inc", "goxeed", "goxeed.challenge");
-  module_load_include ("inc", "goxeed", "goxeed.challenge_user");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.blocks");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.user_profile");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.game");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.game_user");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.mission");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.mission_user");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.challenge");
+  module_load_include ("inc", "goxeedmodule", "goxeedmodule.challenge_user");
 }
 
 /**
  * Implement hook_init()
  */
-function goxeed_init()
+function goxeedmodule_init()
 {
+  
+//  drupal_set_message ("field_info_widget_types: ".var_export(field_info_widget_types(),true));
+  
   // Include all needed .inc files of the module
-  goxeed_goxeed_include();
+  goxeedmodule_goxeedmodule_include();
 
   // Make sure all authenticated users can see othes profiles
   user_role_grant_permissions (DRUPAL_AUTHENTICATED_RID, array('access user profiles'));
@@ -71,16 +74,16 @@ function goxeed_init()
     {
       if (arg(0) == "node" && strlen(arg(1) > 0))
       {
-        $_SESSION["goxeed_destination"] = arg(1);
+        $_SESSION["goxeedmodule_destination"] = arg(1);
         drupal_goto ("linkedin/login/0");
       }
     }
   }
 
-  if (arg(0) == "user") if (isset($_SESSION)) if (isset($_SESSION["goxeed_destination"])) if(strlen($_SESSION["goxeed_destination"]) > 0)
+  if (arg(0) == "user") if (isset($_SESSION)) if (isset($_SESSION["goxeedmodule_destination"])) if(strlen($_SESSION["goxeedmodule_destination"]) > 0)
   {
-    $memory_local = $_SESSION["goxeed_destination"];
-    $_SESSION["goxeed_destination"] = "";
+    $memory_local = $_SESSION["goxeedmodule_destination"];
+    $_SESSION["goxeedmodule_destination"] = "";
     drupal_goto ("node/".$memory_local);
   }
 }
@@ -91,9 +94,9 @@ function goxeed_init()
  * Implement hook_node_presave, by invoking hook for each content type
  * The invoked hook is implemented by each content type
  */
-function goxeed_node_presave($node)
+function goxeedmodule_node_presave($node)
 {
-  module_invoke ("goxeed", "goxeed_" . $node->type."_presave", $node);
+  module_invoke ("goxeedmodule", "goxeedmodule_" . $node->type."_presave", $node);
 }
 
 /**
@@ -102,9 +105,9 @@ function goxeed_node_presave($node)
  * Implement hook_node_isert by invoking hooks for each content type.
  * The invoked hook is implemented by each content type
  */
-function goxeed_node_insert($node)
+function goxeedmodule_node_insert($node)
 {
-  module_invoke ("goxeed", "goxeed_".$node->type."_insert", $node);
+  module_invoke ("goxeedmodule", "goxeedmodule_".$node->type."_insert", $node);
 }
 
 
@@ -120,17 +123,17 @@ function goxeed_node_insert($node)
  * Implement hook_node_access to control which users can modify which nodes.
  * This is used for granting game administrators access to modify games
  */
-function goxeed_node_access($node, $op, $account)	
+function goxeedmodule_node_access($node, $op, $account)	
 {
   $result = NODE_ACCESS_IGNORE;
 
-  goxeed_goxeed_include();
+  goxeedmodule_goxeedmodule_include();
 
   $node_type = "";
   if (isset($node->type)) $node_type = $node->type;
   else $node_type = $node;
 
-  $return = module_invoke ("goxeed", "goxeed_".$node_type."_access", $node, $op, $account);
+  $return = module_invoke ("goxeedmodule", "goxeedmodule_".$node_type."_access", $node, $op, $account);
   if ($return) $result = $return;
 
   return $result;
@@ -139,10 +142,10 @@ function goxeed_node_access($node, $op, $account)
 /**
  * Implements hook_user_access
  */
-function goxeed_user_access ($string, $account)
+function goxeedmodule_user_access ($string, $account)
 {
 
-  drupal_set_message ("goxeed_user_access ".$string);
+  drupal_set_message ("goxeedmodule_user_access ".$string);
 
   $result = FALSE;
 
@@ -157,9 +160,9 @@ function goxeed_user_access ($string, $account)
 /**
  * Implements hook_node_delete()
  */
-function goxeed_node_delete($node)
+function goxeedmodule_node_delete($node)
 {
-  module_invoke ("goxeed", "goxeed_".$node->type."_delete", $node);
+  module_invoke ("goxeedmodule", "goxeedmodule_".$node->type."_delete", $node);
 }
 
 /**
@@ -169,10 +172,10 @@ function goxeed_node_delete($node)
  * Each node type handles this by its own function.
  */
 
-function goxeed_form_alter(&$form)
+function goxeedmodule_form_alter(&$form)
 {
   $form_id = $form["form_id"]["#value"];
-  $function_name = ("goxeed_goxeed_".$form_id."_alter");
+  $function_name = ("goxeedmodule_goxeedmodule_".$form_id."_alter");
   if (function_exists ($function_name))
   {
     $form = call_user_func ($function_name, $form);
@@ -184,82 +187,82 @@ function goxeed_form_alter(&$form)
  * 
  * The current page is loaded, at items are added "backwards" through the item tree
  */
-function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
+function goxeedmodule_menu_breadcrumb_alter(&$active_trail, $item)
 {
   $active_trail = array();																// Clear Drupal internal breadcrumbs
   global $user;																			// Get global user object
-  $user_local = goxeed_user_secure_load($user->uid);													// Load the logged in user
+  $user_local = goxeedmodule_user_secure_load($user->uid);													// Load the logged in user
   if (arg(0) == "user")																	// If the page is a user..
   {
-    if (strlen(arg(1)) > 0)	$user_local = goxeed_user_secure_load(arg(1));						// .. load that user instead
+    if (strlen(arg(1)) > 0)	$user_local = goxeedmodule_user_secure_load(arg(1));						// .. load that user instead
   }
   else if (arg(0) == "node" && strlen(arg(1)) > 0)										// If the page is a node
   {
-    $node = goxeed_node_secure_load (arg(1));															// Load the node of the page
+    $node = goxeedmodule_node_secure_load (arg(1));															// Load the node of the page
     	
     if ($node)
     {
       // CHALLENGE
 
-      if ($node->type == "goxeed_challenge")													// If the current page is a challenge
+      if ($node->type == "goxeedmodule_challenge")													// If the current page is a challenge
       {
         array_unshift ($active_trail, array("title" => $node->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Set a breadcrumb item
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get the mission the challenge belongs to ...
-        $node = goxeed_node_secure_load($items[0]["value"]);										// ... and load it
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get the mission the challenge belongs to ...
+        $node = goxeedmodule_node_secure_load($items[0]["value"]);										// ... and load it
       }
-      if ($node->type == "goxeed_challenge_user")											// If the current page is a challenge user
+      if ($node->type == "goxeedmodule_challenge_user")											// If the current page is a challenge user
       {
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_challenge_nid");				// Get the challenge node id
-        $node_title = goxeed_node_secure_load($items[0]["value"]);									// ... and load that node to set the title
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_challenge_nid");				// Get the challenge node id
+        $node_title = goxeedmodule_node_secure_load($items[0]["value"]);									// ... and load that node to set the title
         array_unshift ($active_trail, array("title" => $node_title->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Set the breadcrumb item
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");				// Get the mission user node id ...
-        $node = goxeed_node_secure_load($items[0]["value"]);										// ... and load the node
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");				// Get the mission user node id ...
+        $node = goxeedmodule_node_secure_load($items[0]["value"]);										// ... and load the node
       }
 
       // MISSION
 
-      if ($node->type == "goxeed_mission")													// If the current item is a mission
+      if ($node->type == "goxeedmodule_mission")													// If the current item is a mission
       {
         array_unshift ($active_trail, array("title" => $node->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the mission to the breadcrumb ..
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get the game id ..
-        $node = goxeed_node_secure_load($items[0]["value"]);										// .. and load the game.
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get the game id ..
+        $node = goxeedmodule_node_secure_load($items[0]["value"]);										// .. and load the game.
       }
-      if ($node->type == "goxeed_mission_user")												// If the current item is a mission user ..
+      if ($node->type == "goxeedmodule_mission_user")												// If the current item is a mission user ..
       {
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get mission id
-        $node_title = goxeed_node_secure_load($items[0]["value"]);									// .. load mission node
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_mission_nid");					// Get mission id
+        $node_title = goxeedmodule_node_secure_load($items[0]["value"]);									// .. load mission node
         array_unshift ($active_trail, array("title" => $node_title->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the breadcrumb item
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");				// Get game user items ..
-        $node = goxeed_node_secure_load($items[0]["value"]);										// .. and load the game user
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_game_user_nid");				// Get game user items ..
+        $node = goxeedmodule_node_secure_load($items[0]["value"]);										// .. and load the game user
       }
 
       // GAME
 
-      if ($node->type == "goxeed_game")														// If the current item is a game
+      if ($node->type == "goxeedmodule_game")														// If the current item is a game
       {
         array_unshift ($active_trail, array("title" => $node->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the game to the breadcrumb
-        $user_local = goxeed_user_secure_load($user->uid);										// Load the logged in user
+        $user_local = goxeedmodule_user_secure_load($user->uid);										// Load the logged in user
       }
-      if ($node->type == "goxeed_game_user")
+      if ($node->type == "goxeedmodule_game_user")
       {
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get game id
-        $node_title = goxeed_node_secure_load($items[0]["value"]);									// .. load game node
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_game_nid");						// Get game id
+        $node_title = goxeedmodule_node_secure_load($items[0]["value"]);									// .. load game node
         array_unshift ($active_trail, array("title" => $node_title->title,
             "href" => "node/".$node->nid, "localized_options" => array()));			// Add the breadcrumb item
-        $items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_user_uid");						// Load the game user user items
-        $user_local = goxeed_user_secure_load($items[0]["value"]);									// .. and load the game user user
+        $items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_user_uid");						// Load the game user user items
+        $user_local = goxeedmodule_user_secure_load($items[0]["value"]);									// .. and load the game user user
       }
     }
   }
 
   // USER
 
-  array_unshift ($active_trail, array("title" => goxeed_real_name($user_local),
+  array_unshift ($active_trail, array("title" => goxeedmodule_real_name($user_local),
       "href" => "user/".$user_local->uid, "localized_options" => array()));				// Add the user name to the breadcrumb
 }
 
@@ -271,18 +274,18 @@ function goxeed_menu_breadcrumb_alter(&$active_trail, $item)
  * 
  * In LinkedIn is installed prevent users from editing own profile, to avoid them from unsyncing with their LinkedIn profile
  */
-function goxeed_menu_alter(&$items) {
+function goxeedmodule_menu_alter(&$items) {
 
   // Removing certain local navigation tabs that are either undesired or need to be custom relocated.
-  $items['user/%user/oauth']['access callback'] = 'goxeed_goxeed_menu_access_callback';
-  $items['user/%user/edit']['access callback'] = 'goxeed_goxeed_menu_access_callback';
-  $items['user/%user/edit/linkedin']['access callback'] = 'goxeed_goxeed_menu_access_callback';
+  $items['user/%user/oauth']['access callback'] = 'goxeedmodule_goxeedmodule_menu_access_callback';
+  $items['user/%user/edit']['access callback'] = 'goxeedmodule_goxeedmodule_menu_access_callback';
+  $items['user/%user/edit/linkedin']['access callback'] = 'goxeedmodule_goxeedmodule_menu_access_callback';
 }
 
 /**
  * Handle menu access callback to avoid access if LinkedIn is installed
  */
-function goxeed_goxeed_menu_access_callback()
+function goxeedmodule_goxeedmodule_menu_access_callback()
 {
   $result = TRUE;
   global $user;
@@ -299,34 +302,34 @@ function goxeed_goxeed_menu_access_callback()
  *
  * Create callback for theme hooks to be able to act on them in the module
  */
-function goxeed_theme_registry_alter(&$theme_registry)
+function goxeedmodule_theme_registry_alter(&$theme_registry)
 {
-  if (!in_array("goxeed_module_preprocess_page", $theme_registry["page"]["preprocess functions"]))
-    $theme_registry["page"]["preprocess functions"][] = "goxeed_module_preprocess_page";	// Add this modules page preprocess function to the theme
+  if (!in_array("goxeedmodule_module_preprocess_page", $theme_registry["page"]["preprocess functions"]))
+    $theme_registry["page"]["preprocess functions"][] = "goxeedmodule_module_preprocess_page";	// Add this modules page preprocess function to the theme
 
-  if (!in_array("goxeed_module_preprocess_node", $theme_registry["node"]["preprocess functions"]))
-    $theme_registry["node"]["preprocess functions"][] = "goxeed_module_preprocess_node";	// Add this modules page preprocess function to the theme
+  if (!in_array("goxeedmodule_module_preprocess_node", $theme_registry["node"]["preprocess functions"]))
+    $theme_registry["node"]["preprocess functions"][] = "goxeedmodule_module_preprocess_node";	// Add this modules page preprocess function to the theme
 }
 
 /**
  * Implement hook_preprocess_node()
  * 
- * This function is added to the theme registry in goxeed_theme_registry_alter and so it is called like template_preprocess_node
+ * This function is added to the theme registry in goxeedmodule_theme_registry_alter and so it is called like template_preprocess_node
  * 
  * Invoke the same function for the specific node type
  */
-function goxeed_module_preprocess_node (&$variables)
+function goxeedmodule_module_preprocess_node (&$variables)
 {
   $node = $variables["node"];
-  $variables = module_invoke ("goxeed", "goxeed_preprocess_".$node->type, $variables);
+  $variables = module_invoke ("goxeedmodule", "goxeedmodule_preprocess_".$node->type, $variables);
 }
 	
 /**
  * Implement hook_preprocess_page
  * 
- * This function is added to the theme registry in goxeed_theme_registry_alter and so it is called like template_preprocess_page
+ * This function is added to the theme registry in goxeedmodule_theme_registry_alter and so it is called like template_preprocess_page
  */
-function goxeed_module_preprocess_page (&$variables)
+function goxeedmodule_module_preprocess_page (&$variables)
 {
 
   global $user;
@@ -342,7 +345,7 @@ function goxeed_module_preprocess_page (&$variables)
       drupal_set_title (t("Welcome to GoXeed"));
       unset($variables["page"]["content"]);
       $variables["feed_icons"] = "";
-      $variables["page"]["content"]["system_main"]["goxeed"][0]["#markup"] =
+      $variables["page"]["content"]["system_main"]["goxeedmodule"][0]["#markup"] =
       drupal_render(drupal_get_form("user_login"));
       //l(t("Click here to log in with LinkedIn"), "linkedin/login/0");
     }
@@ -354,7 +357,7 @@ function goxeed_module_preprocess_page (&$variables)
   if (isset ($variables["node"])) 														// Check if the current page shows a node
   {
     $node = $variables["node"];
-    $variables_alt = module_invoke ("goxeed", "goxeed_preprocess_page_".$node->type, $variables);
+    $variables_alt = module_invoke ("goxeedmodule", "goxeedmodule_preprocess_page_".$node->type, $variables);
     if ($variables_alt) $variables = $variables_alt;
   }
   	
@@ -366,12 +369,12 @@ function goxeed_module_preprocess_page (&$variables)
 /**
   *   Load user securely
   */
-function goxeed_user_secure_load ($uid)
+function goxeedmodule_user_secure_load ($uid)
 {
     $result = user_load($uid);
     if (!$result)
     {
-      watchdog ('goxeed', 'User id '.$uid. ' was not found.', array() ,WATCHDOG_ERROR);
+      watchdog ('goxeedmodule', 'User id '.$uid. ' was not found.', array() ,WATCHDOG_ERROR);
     }
     return $result;
 }
@@ -380,13 +383,13 @@ function goxeed_user_secure_load ($uid)
 /**
   *   Load node securely
   */
-function goxeed_node_secure_load ($nid)
+function goxeedmodule_node_secure_load ($nid)
 {
     $result = node_load($nid);
     if (!$result)
     {
       global $user;
-      watchdog ('goxeed', 'Node id '.$nid. ' was not found. User id: '.$user->uid,array(),WATCHDOG_ERROR);
+      watchdog ('goxeedmodule', 'Node id '.$nid. ' was not found. User id: '.$user->uid,array(),WATCHDOG_ERROR);
     }
     return $result;
 }
@@ -394,7 +397,7 @@ function goxeed_node_secure_load ($nid)
 /**
   *   Get items but check, that the entity exists first
   */
-function goxeed_field_secure_get_items ($entity_type, $entity, $field)
+function goxeedmodule_field_secure_get_items ($entity_type, $entity, $field)
 {
   $result = NULL;
   if ($entity)
@@ -403,7 +406,7 @@ function goxeed_field_secure_get_items ($entity_type, $entity, $field)
   }
   else
   {
-    watchdog ('goxeed', ''.$entity_type.' missing in search for '.$field,array(),WATCHDOG_ERROR);
+    watchdog ('goxeedmodule', ''.$entity_type.' missing in search for '.$field,array(),WATCHDOG_ERROR);
   }
   return $result;
 }

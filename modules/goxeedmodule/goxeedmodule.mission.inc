@@ -16,15 +16,15 @@
  *
  */
 
-function goxeed_goxeed_mission_add($game)
+function goxeedmodule_goxeedmodule_mission_add($game)
 {
   $mission = new stdClass();												// Create a standard object
-  $mission->type = "goxeed_mission";											// Make it a mission node
+  $mission->type = "goxeedmodule_mission";											// Make it a mission node
   node_object_prepare($mission);											// Prepare the node
   $mission->title = t("Mission") . " - ". $game->title;					// Set the title to be the game name and "New Mission" added
   $mission->field_goxeed_game_nid["und"][0]["value"] = $game->nid;		// Set game reference to the game of this node
   node_save($mission);													// Save the node
-  goxeed_game_mission_add ($game->nid, $mission->nid);
+  goxeedmodule_game_mission_add ($game->nid, $mission->nid);
   return $mission;
 }
 
@@ -37,9 +37,9 @@ function goxeed_goxeed_mission_add($game)
  * @param $challenge_nid
  *   Node id of the challenge
  */
-function goxeed_goxeed_mission_challenge_add ($mission_nid, $challenge_nid)
+function goxeedmodule_goxeedmodule_mission_challenge_add ($mission_nid, $challenge_nid)
 {
-  $mission = goxeed_node_secure_load ($mission_nid);
+  $mission = goxeedmodule_node_secure_load ($mission_nid);
   $mission->field_goxeed_challenge_nid["und"][] = array ("value" => $challenge_nid);
   node_save ($mission);
 }
@@ -53,10 +53,10 @@ function goxeed_goxeed_mission_challenge_add ($mission_nid, $challenge_nid)
  * @param $target_nid
  *   Node id of the challenge to remove
  */
-function goxeed_mission_challenge_remove ($nid, $target_nid)
+function goxeedmodule_mission_challenge_remove ($nid, $target_nid)
 {
-  $node = goxeed_node_secure_load ($nid);
-  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_challenge_nid');
+  $node = goxeedmodule_node_secure_load ($nid);
+  $items = goxeedmodule_field_secure_get_items ('node', $node, 'field_goxeed_challenge_nid');
   foreach ($items as $key => $item)
   {
     if ($item["value"] == $target_nid)
@@ -75,10 +75,10 @@ function goxeed_mission_challenge_remove ($nid, $target_nid)
  * @param $target_nid
  *   Node id of the mission user to remove
  */
-function goxeed_mission_mission_user_remove ($nid, $target_nid)
+function goxeedmodule_mission_mission_user_remove ($nid, $target_nid)
 {
-  $node = goxeed_node_secure_load ($nid);
-  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_mission_user_nid');
+  $node = goxeedmodule_node_secure_load ($nid);
+  $items = goxeedmodule_field_secure_get_items ('node', $node, 'field_goxeed_mission_user_nid');
   foreach ($items as $key => $item)
   {
     if ($item["value"] == $target_nid)
@@ -90,26 +90,26 @@ function goxeed_mission_mission_user_remove ($nid, $target_nid)
 }
 
 /**
- * Implement hook_node_presave for goxeed_mission nodes
+ * Implement hook_node_presave for goxeedmodule_mission nodes
  */
-function goxeed_goxeed_goxeed_mission_presave($node)
+function goxeedmodule_goxeedmodule_goxeedmodule_mission_presave($node)
 {
 
   if (!isset($node->nid))
   {
-    $game = goxeed_node_secure_load ($node->field_goxeed_game_nid["und"][0]["value"]);
+    $game = goxeedmodule_node_secure_load ($node->field_goxeed_game_nid["und"][0]["value"]);
     $game_user_items = $game->field_goxeed_game_user_nid["und"];
      
     foreach ($game_user_items as $game_user_nid)
     {
 
-      $mission_user = goxeed_mission_user_create($game_user_nid["value"]);
-      goxeed_goxeed_mission_mission_user_add($node, $mission_user->nid);
+      $mission_user = goxeedmodule_mission_user_create($game_user_nid["value"]);
+      goxeedmodule_goxeedmodule_mission_mission_user_add($node, $mission_user->nid);
     }
   }
 }
 
-function goxeed_goxeed_goxeed_mission_node_form_alter($form)
+function goxeedmodule_goxeedmodule_goxeedmodule_mission_node_form_alter($form)
 {
   global $user; if ($user->uid>1)
   {
@@ -128,10 +128,10 @@ function goxeed_goxeed_goxeed_mission_node_form_alter($form)
  * @param $mission_user_nid
  *   Node id of the mission user node
  */
-function goxeed_goxeed_mission_mission_user_add (&$mission, $mission_user_nid)								// Takes game node id and game user node id
+function goxeedmodule_goxeedmodule_mission_mission_user_add (&$mission, $mission_user_nid)								// Takes game node id and game user node id
 {
   $found = false;																			// Initially assume user not alreay registered for this game
-  $mission_user_items = goxeed_field_secure_get_items ("node", $mission, "field_goxeed_mission_user_nid");					// Get current game users
+  $mission_user_items = goxeedmodule_field_secure_get_items ("node", $mission, "field_goxeed_mission_user_nid");					// Get current game users
   if ($mission_user_items)																	// If any exists ..
     foreach ($mission_user_items as $mission_user_item)										// .. loop though them ...
     if ($mission_user_item["value"] == $mission_user_nid)	$found = true;					// .. if new user is found set flag for found
@@ -144,50 +144,50 @@ function goxeed_goxeed_mission_mission_user_add (&$mission, $mission_user_nid)		
 /**
  * Implement hook_node_insert for mission nodes
  */
-function goxeed_goxeed_goxeed_mission_insert($node)
+function goxeedmodule_goxeedmodule_goxeedmodule_mission_insert($node)
 {
-  $mission_user_items = goxeed_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");
+  $mission_user_items = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_mission_user_nid");
   foreach ($mission_user_items as $mission_user_item)
   {
-    goxeed_goxeed_mission_user_mission_nid_set ($mission_user_item["value"], $node->nid);
+    goxeedmodule_goxeedmodule_mission_user_mission_nid_set ($mission_user_item["value"], $node->nid);
   }
 }
 
 /**
- * Implement hook_node_delete for goxeed_mission node
+ * Implement hook_node_delete for goxeedmodule_mission node
  */
-function goxeed_goxeed_goxeed_mission_delete($node)
+function goxeedmodule_goxeedmodule_goxeedmodule_mission_delete($node)
 {
-  $node = goxeed_node_secure_load ($node->nid);
-  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_challenge_nid');
+  $node = goxeedmodule_node_secure_load ($node->nid);
+  $items = goxeedmodule_field_secure_get_items ('node', $node, 'field_goxeed_challenge_nid');
   if ($items) foreach ($items as $item)
   {
     node_delete ($item['value']);
   }
-  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_mission_user_nid');
+  $items = goxeedmodule_field_secure_get_items ('node', $node, 'field_goxeed_mission_user_nid');
   if ($items) foreach ($items as $item)
   {
     node_delete ($item['value']);
   }
-  $items = goxeed_field_secure_get_items ('node', $node, 'field_goxeed_game_nid');
+  $items = goxeedmodule_field_secure_get_items ('node', $node, 'field_goxeed_game_nid');
   if ($items) foreach ($items as $item)
   {
-    goxeed_game_mission_remove ($item['value'], $node->nid);
+    goxeedmodule_game_mission_remove ($item['value'], $node->nid);
   }
 
 }
 
 /**
- * Implements hook_node_access for goxeed_mission nodes
+ * Implements hook_node_access for goxeedmodule_mission nodes
  */
-function goxeed_goxeed_goxeed_mission_access($node, $op, $account)
+function goxeedmodule_goxeedmodule_goxeedmodule_mission_access($node, $op, $account)
 {
   $result = NODE_ACCESS_IGNORE;
   //if ($op == "create") $result = NODE_ACCESS_DENY;
   if ($op == "update" || $op == "delete")
   {
-    $items_game = goxeed_field_secure_get_items ("node", $node, "field_goxeed_game_nid");
-    $game_local = goxeed_node_secure_load($items_game[0]['value']);
+    $items_game = goxeedmodule_field_secure_get_items ("node", $node, "field_goxeed_game_nid");
+    $game_local = goxeedmodule_node_secure_load($items_game[0]['value']);
     if (node_access ("update", $game_local, $account))
       $result = NODE_ACCESS_ALLOW;
   }
@@ -205,10 +205,10 @@ function goxeed_goxeed_goxeed_mission_access($node, $op, $account)
  *  @param int $number
  *  Number of bedges to return (maximum)
  */
-  function goxeed_mission_badges_html ($uid, $number)
+  function goxeedmodule_mission_badges_html ($uid, $number)
   {
     $badges_html = "";
-    $badges = goxeed_user_profile_badges ($uid);    // Get array of badges earned by the current user
+    $badges = goxeedmodule_user_profile_badges ($uid);    // Get array of badges earned by the current user
     $badges = array_unique($badges);
     $badges_in_header = $number;  
     $badge_keys = array();
@@ -225,9 +225,9 @@ function goxeed_goxeed_goxeed_mission_access($node, $op, $account)
     {
       shuffle ($badge_keys);
     }
-    $icons = goxeed_goxeed_mission_icons();                       // Get array of available badges
+    $icons = goxeedmodule_goxeedmodule_mission_icons();                       // Get array of available badges
     $badges_html = '';
-    foreach ($badge_keys as $badge_key)
+    if ($badge_keys) foreach ($badge_keys as $badge_key)
     {
       $icon = $icons[$badges[$badge_key]];
       $badges_html = $badges_html . '<li class="icon '.$badges[$badge_key].'">'.$icon.'</li>';
@@ -236,9 +236,9 @@ function goxeed_goxeed_goxeed_mission_access($node, $op, $account)
   }
 
 /**
- * Implements hook_preprocess_nodes for goxeed_mission nodes
+ * Implements hook_preprocess_nodes for goxeedmodule_mission nodes
  */
-function goxeed_goxeed_preprocess_goxeed_mission($variables)
+function goxeedmodule_goxeedmodule_preprocess_goxeedmodule_mission($variables)
 {
   global $user;
 
@@ -257,7 +257,7 @@ function goxeed_goxeed_preprocess_goxeed_mission($variables)
            
         default:
            
-          $mission_user_nid = goxeed_goxeed_module_mission_user_nid($node_local->nid, $user->uid);	// Get nid of game_user object (-1 if none)
+          $mission_user_nid = goxeedmodule_goxeedmodule_module_mission_user_nid($node_local->nid, $user->uid);	// Get nid of game_user object (-1 if none)
 
         if (node_access ("update", $node_local))										// If the user has editing rights for the mission ...
         {

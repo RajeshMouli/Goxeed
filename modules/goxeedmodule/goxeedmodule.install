@@ -12,10 +12,10 @@
  *
  * Install all content types
  */
-function goxeed_install()
+function goxeedmodule_install()
 {
 
-  $content_types = goxeed_goxeed_content_types();
+  $content_types = goxeedmodule_goxeedmodule_content_types();
   foreach ($content_types as $content_type)
   {
     $content_type_defaults = node_type_set_defaults($content_type);
@@ -23,14 +23,14 @@ function goxeed_install()
   }
 
   // Install fields
-  $fields = goxeed_goxeed_fields();
+  $fields = goxeedmodule_goxeedmodule_fields();
   foreach ($fields as $field)
   {
     if (!field_info_field($field['field_name'])) field_create_field($field);
   }
 
   // Install instances
-  $instances = goxeed_goxeed_instances();
+  $instances = goxeedmodule_goxeedmodule_instances();
   foreach ($instances as $instance)
   {
     field_create_instance ($instance);
@@ -43,7 +43,7 @@ function goxeed_install()
 /**
  * Implements hook_enable()
  */
-function goxeed_enable()
+function goxeedmodule_enable()
 {
   drupal_set_message ("GoXeed has been enabled");
 }
@@ -51,7 +51,7 @@ function goxeed_enable()
 /**
  * Implements hook_disable()
  */
-function goxeed_disable()
+function goxeedmodule_disable()
 {
   drupal_set_message ("GoXeed has been disabled");
 }
@@ -59,18 +59,18 @@ function goxeed_disable()
 /**
  * Implements hook_uninstall()
  */
-function goxeed_uninstall()
+function goxeedmodule_uninstall()
 {
 
   // Uninstall instances
-  $instances = goxeed_goxeed_instances();
+  $instances = goxeedmodule_goxeedmodule_instances();
   foreach ($instances as $instance)
   {
     field_delete_instance ($instance, FALSE);
   }
 
   // Uninstall fields
-  $fields = goxeed_goxeed_fields();
+  $fields = goxeedmodule_goxeedmodule_fields();
   foreach ($fields as $field)
   {
     field_delete_field($field['field_name']);
@@ -78,7 +78,7 @@ function goxeed_uninstall()
   field_purge_batch(count($fields));
    
   // Uninstall content types
-  $content_types = goxeed_goxeed_content_types();
+  $content_types = goxeedmodule_goxeedmodule_content_types();
   foreach ($content_types as $content_type)
   {
     node_type_delete($content_type['type']);
@@ -93,15 +93,15 @@ function goxeed_uninstall()
  * @return array
  *   Array of content types
  */
-function goxeed_goxeed_content_types ()
+function goxeedmodule_goxeedmodule_content_types ()
 {
   $content_types = array(
-      array('type' => 'goxeed_game', 'name' => st('GoXeed Game'), 'description' => st('A game for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
-      array('type' => 'goxeed_game_user', 'name' => st('GoXeed Game User'), 'description' => st('A game user for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
-      array('type' => 'goxeed_mission', 'name' => st('GoXeed Mission'), 'description' => st('A mission for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
-      array('type' => 'goxeed_mission_user', 'name' => st('GoXeed Mission User'), 'description' => st('A mission user for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
-      array('type' => 'goxeed_challenge', 'name' => st('GoXeed Challenge'), 'description' => st('A challenge for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
-      array('type' => 'goxeed_challenge_user', 'name' => st('GoXeed Challenge User'), 'description' => st('A challenge user for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
+      array('type' => 'goxeedmodule_game', 'name' => st('GoXeed Game'), 'description' => st('A game for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
+      array('type' => 'goxeedmodule_game_user', 'name' => st('GoXeed Game User'), 'description' => st('A game user for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
+      array('type' => 'goxeedmodule_mission', 'name' => st('GoXeed Mission'), 'description' => st('A mission for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
+      array('type' => 'goxeedmodule_mission_user', 'name' => st('GoXeed Mission User'), 'description' => st('A mission user for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
+      array('type' => 'goxeedmodule_challenge', 'name' => st('GoXeed Challenge'), 'description' => st('A challenge for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
+      array('type' => 'goxeedmodule_challenge_user', 'name' => st('GoXeed Challenge User'), 'description' => st('A challenge user for the GoXeed Module'), 'base' => 'node_content', 'custom' => FALSE, 'modified' => TRUE, 'locked' => TRUE, 'disabled' => FALSE, ),
   );
   return $content_types;
 }
@@ -112,7 +112,7 @@ function goxeed_goxeed_content_types ()
  * @return array
  *   Array of fields
  */
-function goxeed_goxeed_fields()
+function goxeedmodule_goxeedmodule_fields()
 {
   $fields = array(
     array( 'field_name' => 'field_goxeed_first_name', 'type' => 'text', 'cardinality' => 1, ),
@@ -134,11 +134,12 @@ function goxeed_goxeed_fields()
   	array( 'field_name' => 'field_goxeed_challenge_user_nid', 'type' => 'text', 'cardinality' => -1, ),
     array( 'field_name' => 'field_goxeed_challenge_comment', 'type' => 'text_long', 'cardinality' => 1, ),
   	array( 'field_name' => 'field_goxeed_user_uid', 'type' => 'text', 'cardinality' => 1, ),
+  	array( 'field_name' => 'field_goxeed_challenge_like_uid', 'type' => 'text', 'cardinality' => -1, ),
   	array( 'field_name' => 'field_goxeed_active', 'type' => 'text', 'cardinality' => 1, ),
   	array( 'field_name' => 'field_goxeed_color', 'type' => 'text', 'cardinality' => 1, ),
-  	array( 'field_name' => 'field_goxeed_icon', 'type' => 'list_text', 'cardinality' => 1, 'settings' => array( 'allowed_values_function' => 'goxeed_goxeed_mission_icons', ), ),
+  	array( 'field_name' => 'field_goxeed_icon', 'type' => 'list_text', 'cardinality' => 1, 'default_widget' => 'options_buttons', 'settings' => array( 'allowed_values_function' => 'goxeedmodule_goxeedmodule_mission_icons', ), ),
   	array( 'field_name' => "field_goxeed_admin_a", 'label' => "GoXeed Admin", 'type' => 'list_integer', 'cardinality' => -1, 'indexes' => array( 'value' => array( 0 => 'value', ), ),
-  	  'module' => 'list', 'settings' => array( 'allowed_values_function' => 'goxeed_goxeed_user_type_options_list', ), ),
+  	  'module' => 'list', 'settings' => array( 'allowed_values_function' => 'goxeedmodule_goxeedmodule_user_type_options_list', ), ),
     array( 'field_name' => "field_goxeed_game_administrator", 'type' => "user_reference", 'cardinality' => -1, 'default_widget' => 'user_reference_autocomplete', 'default_formatter' => 'user_reference_default',
       'settings' => array( 'referenceable_roles' => array( DRUPAL_AUTHENTICATED_RID => '2', ), 'referenceable_status' => array(1 => '1'), ), ),
   );
@@ -151,7 +152,7 @@ function goxeed_goxeed_fields()
  * @return array
  *   Array of instances
  */
-function goxeed_goxeed_instances()
+function goxeedmodule_goxeedmodule_instances()
 {
   $instances = array(
 
@@ -168,49 +169,49 @@ function goxeed_goxeed_instances()
         'widget' => array('active' => 1, 'module' => 'options', 'settings' => array(), 'type' => 'options_buttons', 'weight' => '0', ), ),
      
     // GOXEED GAME
-    array('field_name' => 'field_goxeed_description',      'label' => 'Description', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'widget' => array( 'type' => 'text_textarea', ), ),
-    array('field_name' => 'field_goxeed_video',            'label' => 'Video Embed Code', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_nps_score',        'label' => 'NPS', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_link',    		   'label' => 'Link', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'settings' => array('attributes' => array('target' => 'user'), ), ),
-    array('field_name' => 'field_goxeed_closing',          'label' => 'Closing', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, ),
-    array('field_name' => 'field_goxeed_signup_code',      'label' => 'Signup Code', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_mission_nid',      'label' => 'Mission ID', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_game_user_nid',    'label' => 'Game User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => "field_goxeed_game_administrator", 'label' => "GoXeed Game Administrator", 'entity_type' => "node", 'bundle' => "goxeed_game", 'required' => FALSE, 'settings' => array(),
+    array('field_name' => 'field_goxeed_description',      'label' => 'Description', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'widget' => array( 'type' => 'text_textarea', ), ),
+    array('field_name' => 'field_goxeed_video',            'label' => 'Video Embed Code', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_nps_score',        'label' => 'NPS', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_link',    		   'label' => 'Link', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'settings' => array('attributes' => array('target' => 'user'), ), ),
+    array('field_name' => 'field_goxeed_closing',          'label' => 'Closing', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, ),
+    array('field_name' => 'field_goxeed_signup_code',      'label' => 'Signup Code', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_mission_nid',      'label' => 'Mission ID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_game_user_nid',    'label' => 'Game User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => "field_goxeed_game_administrator", 'label' => "GoXeed Game Administrator", 'entity_type' => "node", 'bundle' => "goxeedmodule_game", 'required' => FALSE, 'settings' => array(),
         'widget' => array('type' => 'user_reference_autocomplete', 'module' => 'user_reference', 'active' => 1, 'settings' => array('autocomplete_match' => 'starts_with', ), ), ),
 
     // GOXEED GAME USER
-    array('field_name' => 'field_goxeed_user_uid',         'label' => 'User UID', 'entity_type' => 'node', 'bundle' => 'goxeed_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_game_nid',         'label' => 'Game NID', 'entity_type' => 'node', 'bundle' => 'goxeed_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_mission_user_nid', 'label' => 'Mission User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_user_points',      'label' => 'User Points', 'entity_type' => 'node', 'bundle' => 'goxeed_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_active',           'label' => 'Active', 'entity_type' => 'node', 'bundle' => 'goxeed_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_user_uid',         'label' => 'User UID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_game_nid',         'label' => 'Game NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_mission_user_nid', 'label' => 'Mission User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_user_points',      'label' => 'User Points', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_active',           'label' => 'Active', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_game_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
 
     // GOXEED MISSION
-    array('field_name' => 'field_goxeed_description',      'label' => 'Description', 'entity_type' => 'node', 'bundle' => 'goxeed_mission', 'required' => FALSE, 'widget' => array( 'type' => 'text_textarea', ), ),
-    array('field_name' => 'field_goxeed_color',            'label' => 'Color', 'entity_type' => 'node', 'bundle' => 'goxeed_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_icon',             'label' => 'Icon', 'entity_type' => 'node', 'bundle' => 'goxeed_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_game_nid',         'label' => 'Game NID', 'entity_type' => 'node', 'bundle' => 'goxeed_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_mission_user_nid', 'label' => 'Mission User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_challenge_nid',    'label' => 'Challenge NID', 'entity_type' => 'node', 'bundle' => 'goxeed_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_description',      'label' => 'Description', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission', 'required' => FALSE, 'widget' => array( 'type' => 'text_textarea', ), ),
+//    array('field_name' => 'field_goxeed_color',            'label' => 'Color', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_icon',             'label' => 'Icon', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission', 'required' => FALSE, 'widget' => array( 'type' => 'options_buttons', ), ),
+    array('field_name' => 'field_goxeed_game_nid',         'label' => 'Game NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_mission_user_nid', 'label' => 'Mission User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_challenge_nid',    'label' => 'Challenge NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
 
     // GOXEED MISSION USER
-    array('field_name' => 'field_goxeed_user_points',        'label' => 'User Points', 'entity_type' => 'node', 'bundle' => 'goxeed_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_mission_nid',        'label' => 'Mission NID', 'entity_type' => 'node', 'bundle' => 'goxeed_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_game_user_nid',      'label' => 'Game User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_challenge_user_nid', 'label' => 'Challenge User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_user_points',        'label' => 'User Points', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_mission_nid',        'label' => 'Mission NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_game_user_nid',      'label' => 'Game User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_challenge_user_nid', 'label' => 'Challenge User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_mission_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
      
     // GOXEED CHALLENGE
-    array('field_name' => 'field_goxeed_description',        'label' => 'Description', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge', 'required' => FALSE, 'widget' => array( 'type' => 'text_textarea', ), ),
-    array('field_name' => 'field_goxeed_mission_nid', 		 'label' => 'Mission NID', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_challenge_user_nid', 'label' => 'Challange User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_description',        'label' => 'Description', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge', 'required' => FALSE, 'widget' => array( 'type' => 'text_textarea', ), ),
+    array('field_name' => 'field_goxeed_mission_nid', 		 'label' => 'Mission NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_challenge_user_nid', 'label' => 'Challange User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
 
     // GOXEED CHALLENGE USER
-    array('field_name' => 'field_goxeed_user_points', 'label' => 'User Points', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_challenge_nid', 'label' => 'Challenge NID', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_mission_user_nid', 'label' => 'Mission User NID', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-    array('field_name' => 'field_goxeed_challenge_comment', 'label' => 'Challenge Comment', 'entity_type' => 'node', 'bundle' => 'goxeed_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
-
+    array('field_name' => 'field_goxeed_user_points', 'label' => 'User Points', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_challenge_nid', 'label' => 'Challenge NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_mission_user_nid', 'label' => 'Mission User NID', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_challenge_like_uid', 'label' => 'Liked by (uid)', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
+    array('field_name' => 'field_goxeed_challenge_comment', 'label' => 'Challenge Comment', 'entity_type' => 'node', 'bundle' => 'goxeedmodule_challenge_user', 'required' => FALSE, 'widget' => array( 'type' => 'textfield', ), ),
   );
 
   return $instances;

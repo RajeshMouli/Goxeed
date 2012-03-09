@@ -1,12 +1,12 @@
 <?php
-// $Id: goxeedprofile.install,v 1.0 2012/02/23 15:09:00 nicolaskristoffersen.com Exp $
+// $Id: Goxeed.install,v 1.0 2012/02/23 15:09:00 nicolaskristoffersen.com Exp $
 
 /**
  * Implements hook_install().
  *
  * Perform actions to set up the site for this profile.
  */
-function goxeedprofile_install() {
+function Goxeed_install() {
   theme_enable (array('sneaky_peach'));
   variable_set ('theme_default', 'sneaky_peach');
   
