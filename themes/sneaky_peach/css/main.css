@@ -66,7 +66,7 @@ h1#page-title em { font-style:normal; }
   margin-top:-70px;
 }
 
-#block-goxeed-goxeed-header{
+#block-goxeedmodule-goxeedmodule-header{
   height:46px;
   background:#252d31;
   padding:12px;
@@ -78,7 +78,7 @@ h1#page-title em { font-style:normal; }
   border-bottom-right-radius: 5px;
 }
 
-#block-goxeed-goxeed-header img{
+#block-goxeedmodule-goxeedmodule-header img{
   height:46px;
   width:46px;
   -moz-border-radius: 3px;
@@ -87,13 +87,13 @@ h1#page-title em { font-style:normal; }
   
 }
 
-#block-goxeed-goxeed-header img:hover{
+#block-goxeedmodule-goxeedmodule-header img:hover{
   -webkit-box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.6);
   box-shadow: 0px 1px 5px 0 rgba(0, 0, 0, 0.6);
 }
 
-#block-goxeed-goxeed-header ul{
+#block-goxeedmodule-goxeedmodule-header ul{
   list-style-type:none;
   margin:0;
   padding:0;
@@ -101,7 +101,7 @@ h1#page-title em { font-style:normal; }
   left:70px;
 }
 
-#block-goxeed-goxeed-header ul li{
+#block-goxeedmodule-goxeedmodule-header ul li{
   margin:2px 0 0;
   padding:0;
   font-size:11px;
@@ -109,23 +109,23 @@ h1#page-title em { font-style:normal; }
   color:#fff;
 }
 
-#block-goxeed-goxeed-header ul li a{
+#block-goxeedmodule-goxeedmodule-header ul li a{
   color:#fff;
 }
 
-#block-goxeed-goxeed-header ul li a:hover{
+#block-goxeedmodule-goxeedmodule-header ul li a:hover{
   text-decoration:underline;
 }
 
 /* Name */
-#block-goxeed-goxeed-header ul li.name{
+#block-goxeedmodule-goxeedmodule-header ul li.name{
   position:absolute;
   top:10px;
   left:70px;
 }
 
 /* Logout link */
-#block-goxeed-goxeed-header ul li.logout a{
+#block-goxeedmodule-goxeedmodule-header ul li.logout a{
   display:inline-block;
   padding:3px 8px 4px;
   -webkit-border-top-right-radius: 5px;
@@ -150,26 +150,26 @@ h1#page-title em { font-style:normal; }
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5d7782', endColorstr='#415058',GradientType=0 ); /* IE6-9 */
 }
 
-#block-goxeed-goxeed-header ul li.logout a:hover{
+#block-goxeedmodule-goxeedmodule-header ul li.logout a:hover{
   color:#fff;
 }
 
 /* Points */
-#block-goxeed-goxeed-header ul li.points{
+#block-goxeedmodule-goxeedmodule-header ul li.points{
   font-weight:bold;
 }
 
 /*--------------------------------------------------
 	Trail (breadcrumbs)
 --------------------------------------------------*/
-#block-goxeed-goxeed-breadcrumbs ul{
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul{
   list-style-type:none;
   margin:4px 0 0;
   padding:0;
   color:#6f8590;
 }
 
-#block-goxeed-goxeed-breadcrumbs ul li{
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li{
   margin:0;
   padding:0;
   background:#c7d9e2;
@@ -178,14 +178,14 @@ h1#page-title em { font-style:normal; }
   margin:1px 0 0;
 }
 
-#block-goxeed-goxeed-breadcrumbs ul li a{ 
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li a{ 
   color:#43555e;
 }
-#block-goxeed-goxeed-breadcrumbs ul li a:hover{ 
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li a:hover{ 
   text-decoration:underline;
 }
 
-#block-goxeed-goxeed-breadcrumbs ul li:first-child{
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li:first-child{
   -webkit-border-top-right-radius: 5px;
   -webkit-border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
@@ -194,7 +194,7 @@ h1#page-title em { font-style:normal; }
   border-top-left-radius: 5px;
 }
 
-#block-goxeed-goxeed-breadcrumbs ul li:last-child{
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li:last-child{
   -webkit-border-bottom-right-radius: 5px;
   -webkit-border-bottom-left-radius: 5px;
   -moz-border-radius-bottomright: 5px;
@@ -203,12 +203,12 @@ h1#page-title em { font-style:normal; }
   border-bottom-left-radius: 5px;
 }
 
-#block-goxeed-goxeed-breadcrumbs ul li.mission{
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li.mission{
   padding-left:38px;
   background:#d6e3ea url(../images/nested.png) no-repeat 24px 6px !important;
 }
 
-#block-goxeed-goxeed-breadcrumbs ul li.challenge{
+#block-goxeedmodule-goxeedmodule-breadcrumbs ul li.challenge{
   padding-left:64px;
   background:#e6eef2 url(../images/nested.png) no-repeat 49px 6px;
 }
@@ -309,19 +309,19 @@ h1#page-title em { font-style:normal; }
 /*--------------------------------------------------
 	Page: Game & Mission
 --------------------------------------------------*/
-.node-type-goxeed-game-user .content h2,
-.node-type-goxeed-mission-user .content h2{
+.node-type-goxeedmodule-game-user .content h2,
+.node-type-goxeedmodule-mission-user .content h2{
   border-bottom:1px solid #BECAD0;
   margin-top:20px;
 }
 
-.node-type-goxeed-game-user .content ul{
+.node-type-goxeedmodule-game-user .content ul{
   list-style-type:none;
   margin:0;
   padding:0;
 }
 
-.node-type-goxeed-game-user .content ul li.mission,
+.node-type-goxeedmodule-game-user .content ul li.mission,
 table.goxeed.mission.challenges tr{
   display:block;
   background:#e9f0f3;
@@ -338,7 +338,7 @@ table.goxeed.mission.challenges tr{
   font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
 }
 
-.node-type-goxeed-game-user .content ul li.mission:hover,
+.node-type-goxeedmodule-game-user .content ul li.mission:hover,
 table.goxeed.mission.challenges tr:hover{
   background:#dbe7ec;
   color:#495B64;
@@ -348,7 +348,7 @@ table.goxeed.mission.challenges tr:hover{
   cursor:pointer;
 }
 
-.node-type-goxeed-game-user .content ul li.mission,
+.node-type-goxeedmodule-game-user .content ul li.mission,
 table.goxeed.mission.challenges tr td{
   padding:11px 14px 9px !important;
   width:80%;
@@ -358,16 +358,16 @@ table.goxeed.mission.challenges tr td.points {
 	width:20%;
 }
 
-.node-type-goxeed-game-user .content ul li.mission h3 { margin-bottom:5px; }
+.node-type-goxeedmodule-game-user .content ul li.mission h3 { margin-bottom:5px; }
 
-.node-type-goxeed-game-user .content ul li.mission .mission.property {
+.node-type-goxeedmodule-game-user .content ul li.mission .mission.property {
   display:inline;
   margin-right:10px;
   padding-right:10px;
   border-right:1px solid #98ACB5;
 }
 
-.node-type-goxeed-game-user .content ul li.mission .mission.property:last-child {
+.node-type-goxeedmodule-game-user .content ul li.mission .mission.property:last-child {
   border:none;
 }
 
@@ -388,7 +388,7 @@ table.goxeed.mission.challenges tbody tr td {
 
 table.goxeed.mission.challenges tbody tr {position:relative;}
 
-.node-type-goxeed-challenge-user #content h3 {
+.node-type-goxeedmodule-challenge-user #content h3 {
 	margin-top:20px;
 }
 
@@ -413,12 +413,12 @@ li.mission {
     background-position: 13px 14px !important;
 }
 
-.node-type-goxeed-game-user .content li.mission.icon {
+.node-type-goxeedmodule-game-user .content li.mission.icon {
     padding-left: 57px !important;
 }
 
 
-.node-type-goxeed-mission-user .category {
+.node-type-goxeedmodule-mission-user .category {
     text-indent:-9999px;
     height:32px;
     width:32px;
@@ -428,72 +428,72 @@ li.mission {
 }
 
 /* Puch page title to make rook for mission icon */
-.node-type-goxeed-mission-user #page-title {
+.node-type-goxeedmodule-mission-user #page-title {
     padding-left:42px;
 }
 
     li.mission.mouth, 
-	.node-type-goxeed-mission-user .category.mouth { background-image: url(../images/icons/mouth.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.mouth { background-image: url(../images/icons/mouth.png) !important; }
     
 	li.mission.ear,
-	.node-type-goxeed-mission-user .category.ear	{ background-image: url(../images/icons/ear.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.ear	{ background-image: url(../images/icons/ear.png) !important; }
     
 	li.mission.light,
-	.node-type-goxeed-mission-user .category.light { background-image: url(../images/icons/light.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.light { background-image: url(../images/icons/light.png) !important; }
     
 	li.mission.graph_up,
-	.node-type-goxeed-mission-user .category.graph_up	{ background-image: url(../images/icons/graph_up.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.graph_up	{ background-image: url(../images/icons/graph_up.png) !important; }
     
 	li.mission.education,
-	.node-type-goxeed-mission-user .category.education { background-image: url(../images/icons/education.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.education { background-image: url(../images/icons/education.png) !important; }
     
 	li.mission.star_2,
-	.node-type-goxeed-mission-user .category.star_2 { background-image: url(../images/icons/star_2.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.star_2 { background-image: url(../images/icons/star_2.png) !important; }
     
 	li.mission.gift,
-	.node-type-goxeed-mission-user .category.gift	{ background-image: url(../images/icons/gift.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.gift	{ background-image: url(../images/icons/gift.png) !important; }
     
 	li.mission.electrical_energy,
-	.node-type-goxeed-mission-user .category.electrical_energy { background-image: url(../images/icons/electrical_energy.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.electrical_energy { background-image: url(../images/icons/electrical_energy.png) !important; }
     
 	li.mission.time,
-	.node-type-goxeed-mission-user .category.time{ background-image: url(../images/icons/time.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.time{ background-image: url(../images/icons/time.png) !important; }
     
 	li.mission.earth_america,
-	.node-type-goxeed-mission-user .category.earth_america	{ background-image: url(../images/icons/earth_america.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.earth_america	{ background-image: url(../images/icons/earth_america.png) !important; }
     
 	li.mission.suitcase,
-	.node-type-goxeed-mission-user .category.suitcase { background-image: url(../images/icons/suitcase.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.suitcase { background-image: url(../images/icons/suitcase.png) !important; }
     
 	li.mission.pen,
-	.node-type-goxeed-mission-user .category.pen { background-image: url(../images/icons/pen.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.pen { background-image: url(../images/icons/pen.png) !important; }
     
 	li.mission.book
-	.node-type-goxeed-mission-user .category.book { background-image: url(../images/icons/book.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.book { background-image: url(../images/icons/book.png) !important; }
     
 	li.mission.tools
-	.node-type-goxeed-mission-user .category.tools { background-image: url(../images/icons/tools.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.tools { background-image: url(../images/icons/tools.png) !important; }
     
 	li.mission.key,
-	.node-type-goxeed-mission-user .category.key	{ background-image: url(../images/icons/key.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.key	{ background-image: url(../images/icons/key.png) !important; }
     
 	li.mission.ruler,
-	.node-type-goxeed-mission-user .category.ruler	{ background-image: url(../images/icons/ruler.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.ruler	{ background-image: url(../images/icons/ruler.png) !important; }
     
 	li.mission.microphone,
-	.node-type-goxeed-mission-user .category.microphone { background-image: url(../images/icons/microphone.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.microphone { background-image: url(../images/icons/microphone.png) !important; }
     
 	li.mission.Seat,
-	.node-type-goxeed-mission-user .category.Seat	{ background-image: url(../images/icons/seat.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.Seat	{ background-image: url(../images/icons/seat.png) !important; }
     
 	li.mission.seat,
-	.node-type-goxeed-mission-user .category.seat { background-image: url(../images/icons/seat.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.seat { background-image: url(../images/icons/seat.png) !important; }
     
 	li.mission.umbrella,
-	.node-type-goxeed-mission-user .category.umbrella { background-image: url(../images/icons/umbrella.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.umbrella { background-image: url(../images/icons/umbrella.png) !important; }
     
 	li.mission.food_and_beverages,
-	.node-type-goxeed-mission-user .category.food_and_beverages { background-image: url(../images/icons/food_and_beverages.png) !important; }
+	.node-type-goxeedmodule-mission-user .category.food_and_beverages { background-image: url(../images/icons/food_and_beverages.png) !important; }
 
 
 /* Leader board */
@@ -537,12 +537,12 @@ table.goxeed.leaderboard tbody tr {
 }
 
 /* Extra buttons */
-#goxeed_show_extra {
+#goxeedmodule_show_extra {
   margin:0 0 20px;
   font-size:11px;
 }
 
-#goxeed_show_extra a {
+#goxeedmodule_show_extra a {
   margin:0 2px;
 }
 

@@ -17,9 +17,9 @@
 }
 
 /* Blocks with "lists" */
-#block-goxeed-goxeed-links .content a,
-#block-goxeed-goxeed-has-completed .content a,
-#block-goxeed-goxeed-currently-playing .content a {
+#block-goxeedmodule-goxeedmodule-links .content a,
+#block-goxeedmodule-goxeedmodule-has-completed .content a,
+#block-goxeedmodule-goxeedmodule-currently-playing .content a {
   display:block;
   background:#e9f0f3;
   margin:0 0 4px;
@@ -36,9 +36,9 @@
   font-size:11px;
 }
 
-#block-goxeed-goxeed-links .content a:hover,
-#block-goxeed-goxeed-has-completed .content a:hover,
-#block-goxeed-goxeed-currently-playing .content a:hover {
+#block-goxeedmodule-goxeedmodule-links .content a:hover,
+#block-goxeedmodule-goxeedmodule-has-completed .content a:hover,
+#block-goxeedmodule-goxeedmodule-currently-playing .content a:hover {
   background:#dbe7ec;
   color:#495B64;
   -webkit-box-shadow: 0px 1px 0 0 #B1C4CD;
@@ -47,12 +47,12 @@
 }
 
 /* user has completed... */
-#block-goxeed-goxeed-has-completed .content a {
+#block-goxeedmodule-goxeedmodule-has-completed .content a {
   background:#f3f3f3;
   color:#9C9C9C;
 }
 
-#block-goxeed-goxeed-has-completed .content a:hover {
+#block-goxeedmodule-goxeedmodule-has-completed .content a:hover {
   background:#EBEBEB;
   color:#616161;
   -webkit-box-shadow: 0px 1px 0 0 #ccc;
@@ -61,11 +61,11 @@
 }
 
 /* So far user has earned points... */
-#block-goxeed-goxeed-points h2 {
+#block-goxeedmodule-goxeedmodule-points h2 {
   display:none;
 }
 
-#block-goxeed-goxeed-points .content {
+#block-goxeedmodule-goxeedmodule-points .content {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -76,7 +76,7 @@
   font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
 }
 
-#block-goxeed-goxeed-points .content span {
+#block-goxeedmodule-goxeedmodule-points .content span {
   display:block;
   font-size:21px;
   margin:6px 0;
@@ -91,24 +91,24 @@
 }
 
 /* Top players */
-#block-goxeed-goxeed-top-players {
+#block-goxeedmodule-goxeedmodule-top-players {
   font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
   font-size:13px;
 }
 
-#block-goxeed-goxeed-top-players ul {
+#block-goxeedmodule-goxeedmodule-top-players ul {
   list-style-type:none;
   margin:0;
   padding:0;
 }
 
-#block-goxeed-goxeed-top-players ul li{
+#block-goxeedmodule-goxeedmodule-top-players ul li{
   margin:4px 0 5px;
   padding:0;
   list-style-type:none;
 }
 
-#block-goxeed-goxeed-top-players ul li .position{
+#block-goxeedmodule-goxeedmodule-top-players ul li .position{
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
   border-radius: 20px;
@@ -128,15 +128,15 @@
   text-shadow:0 0 3px rgba(0, 0, 0, .2);
 }
 
-#block-goxeed-goxeed-top-players ul li:first-child .position{
+#block-goxeedmodule-goxeedmodule-top-players ul li:first-child .position{
   background:#3a4a51;
 }
 
-#block-goxeed-goxeed-top-players ul li:first-child a{
+#block-goxeedmodule-goxeedmodule-top-players ul li:first-child a{
   font-family: MuseoSansRounded700, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
 }
 
-#block-goxeed-goxeed-top-players ul li .points{
+#block-goxeedmodule-goxeedmodule-top-players ul li .points{
   border-left:1px solid #98ACB5;
   padding-left:6px;
 margin-left:6px;  
@@ -144,7 +144,7 @@ color:#98ACB5;
 }
 
 /* NPS */
-#block-goxeed-goxeed-nps {
+#block-goxeedmodule-goxeedmodule-nps {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -155,7 +155,7 @@ color:#98ACB5;
   font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
 }
 
-#block-goxeed-goxeed-nps h2{
+#block-goxeedmodule-goxeedmodule-nps h2{
   font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
   border:none !important;
   font-size:13px;
@@ -163,7 +163,7 @@ color:#98ACB5;
   margin:0;
 }
 
-#block-goxeed-goxeed-nps .content{
+#block-goxeedmodule-goxeedmodule-nps .content{
   display:block;
   font-size:21px;
   margin:6px 0;
@@ -178,8 +178,8 @@ color:#98ACB5;
 }
 
 /* Kill bullets */
-#block-goxeed-goxeed-links li,
-#block-goxeed-goxeed-has-completed li,
-#block-goxeed-goxeed-currently-playing li{
+#block-goxeedmodule-goxeedmodule-links li,
+#block-goxeedmodule-goxeedmodule-has-completed li,
+#block-goxeedmodule-goxeedmodule-currently-playing li{
   list-style-type:none;
 }
