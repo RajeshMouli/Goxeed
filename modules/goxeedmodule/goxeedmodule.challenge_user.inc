@@ -401,7 +401,26 @@ function goxeedmodule_goxeedmodule_preprocess_goxeedmodule_challenge_user($varia
                 $url = url ("node/".arg(1)."/like/".$challenge_user_nid);
                 $like_html = "<span class='button challenge comment ".$class_local."' onclick='location.href=\"".$url."\"' class='pointer color white'>".$label_local."</span>";
               }
-              $comments_html = $comments_html . "<li class='".$class_own."comment'><a href='".url("user/".$user_current->uid)."'><img src='".$image_url."' /></a><b>".goxeedmodule_first_name($user_current).":</b><p>" .$comment. '</p><p class="datetime">'.$date_time.'</p>'.$like_html.'</li>';
+              
+              $likers_html = "";
+                
+              $items_likers = goxeedmodule_field_secure_get_items ('node', $challenge_user_current, 'field_goxeed_challenge_like_uid');
+              $persons_like = 0;
+              if ($items_likers) foreach ($items_likers as $item_liker) {
+                $liker = goxeedmodule_user_secure_load($item_liker['value']);
+                $liker_image_url_items = goxeedmodule_field_secure_get_items ("user", $liker, "field_goxeed_li_pic_url");
+                $liker_image_url = $liker_image_url_items[0]["value"];
+                $liker_name = goxeedmodule_real_name($liker);
+                $persons_like++;
+                $likers_html = $likers_html . "<li class='liker'><a href='".url("user/".$liker->uid)."'><img height='46px' width='46px' title='".$liker_name."' src='".$liker_image_url."' /></a></li>";
+              }
+              if ($persons_like > 0)
+              {
+                $persons_html = $persons_like . ' person likes this';
+                if ($persons_like > 1) $persons_html = $persons_like . " people like this";
+                $likers_html = "<div class='likeinfo'><a href='javascript://' onclick='var next=this.nextSibling; if(next.style.display==\"none\") { next.style.display = \"block\"; } else { next.style.display = \"none\"; }' >".$persons_html."</a><div class='likers' style='display: none;'><h3>".t("Liked by")."</h3><ul>" . $likers_html . '</ul></div></div>';
+              }
+              $comments_html = $comments_html . "<li class='".$class_own."comment'><a href='".url("user/".$user_current->uid)."'><img height='46px' width='46px' src='".$image_url."' /></a><b>".goxeedmodule_first_name($user_current).":</b><div class='challenge complete content'><p>" .$comment. '</p></div><p class="datetime">'.$date_time.'</p>'.$like_html.$likers_html.'</li>';
               //if ($challenge_user_item["value"] == $challenge_user->nid)
               if ($is_admin)
               {

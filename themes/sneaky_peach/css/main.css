@@ -304,7 +304,80 @@ h1#page-title em { font-style:normal; }
 
 #experiences li p {margin:0;}
 
-#experiences li b {}
+#experiences li b {
+	margin-top: .3em;
+}
+	
+#experiences li .like,
+#experiences li .unlike {
+	float: left;
+	padding: 3px 10px 4px 28px;
+	background-repeat: no-repeat;
+	background-position: 10px 4px;
+	z-index: 10;
+}
+
+#experiences li .like {
+	background-image: url(../images/button-checkmark.png);
+}
+
+#experiences li .unlike {
+	background-image: url(../images/button-cross.png);
+}
+
+#experiences li .unlike:hover {
+	background-color: #c00;
+	border-color: #900;
+}
+
+#experiences li .content {
+	margin: 6px 0;
+}
+
+#experiences li .datetime {
+	color: #999;
+	margin: 3px 0 0;
+	float: right;
+}
+
+#experiences li .likeinfo {
+	position: relative;
+	margin: 9px 0 0;
+}
+
+#experiences li .likers {
+	display: none;
+	position: absolute;
+	top: 25px;
+	left: 0;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	width: 300px;
+	max-height: 500px;
+	overflow-y: auto;
+	z-index: 20;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+#experiences li .likers ul {
+	overflow: hidden;
+	margin: 0 15px;
+}
+
+#experiences li .likers h3 {
+	margin: 10px 0 0;
+	padding: 0 15px 2px;
+}
+
+#experiences li .likers li {
+	float: left;
+	border-width: 0;
+}
 
 /*--------------------------------------------------
 	Page: Game & Mission
@@ -350,7 +423,7 @@ table.goxeed.mission.challenges tr:hover{
 
 .node-type-goxeedmodule-game-user .content ul li.mission,
 table.goxeed.mission.challenges tr td{
-  padding:11px 14px 9px !important;
+  padding:11px 14px 9px 57px !important;
   width:80%;
 }
 
@@ -413,10 +486,6 @@ li.mission {
     background-position: 13px 14px !important;
 }
 
-.node-type-goxeedmodule-game-user .content li.mission.icon {
-    padding-left: 57px !important;
-}
-
 
 .node-type-goxeedmodule-mission-user .category {
     text-indent:-9999px;
@@ -432,73 +501,86 @@ li.mission {
     padding-left:42px;
 }
 
-    li.mission.mouth, 
+.form-item label span.category {
+	background-repeat: no-repeat;
+	padding: 8px 0 8px 40px;
+}
+
+.form-item.form-item-field-goxeed-icon-und {
+	margin: 0 0 20px;
+}
+
+    li.mission.mouth, .form-item label span.category.mouth, 
 	.node-type-goxeedmodule-mission-user .category.mouth { background-image: url(../images/icons/mouth.png) !important; }
     
-	li.mission.ear,
+	li.mission.ear, .form-item label span.category.ear,
 	.node-type-goxeedmodule-mission-user .category.ear	{ background-image: url(../images/icons/ear.png) !important; }
     
-	li.mission.light,
+	li.mission.light, .form-item label span.category.light,
 	.node-type-goxeedmodule-mission-user .category.light { background-image: url(../images/icons/light.png) !important; }
     
 	li.mission.graph_up,
 	.node-type-goxeedmodule-mission-user .category.graph_up	{ background-image: url(../images/icons/graph_up.png) !important; }
     
-	li.mission.education,
+	li.mission.education, .form-item label span.category.education,
 	.node-type-goxeedmodule-mission-user .category.education { background-image: url(../images/icons/education.png) !important; }
     
-	li.mission.star_2,
+	li.mission.star_2, .form-item label span.category.star_2,
 	.node-type-goxeedmodule-mission-user .category.star_2 { background-image: url(../images/icons/star_2.png) !important; }
     
-	li.mission.gift,
+	li.mission.gift, .form-item label span.category.gift,
 	.node-type-goxeedmodule-mission-user .category.gift	{ background-image: url(../images/icons/gift.png) !important; }
     
-	li.mission.electrical_energy,
+	li.mission.electrical_energy, .form-item label span.category.electrical_energy,
 	.node-type-goxeedmodule-mission-user .category.electrical_energy { background-image: url(../images/icons/electrical_energy.png) !important; }
     
-	li.mission.time,
+	li.mission.time, .form-item label span.category.time,
 	.node-type-goxeedmodule-mission-user .category.time{ background-image: url(../images/icons/time.png) !important; }
     
-	li.mission.earth_america,
+	li.mission.earth_america, .form-item label span.category.earth_america,
 	.node-type-goxeedmodule-mission-user .category.earth_america	{ background-image: url(../images/icons/earth_america.png) !important; }
     
-	li.mission.suitcase,
+	li.mission.suitcase, .form-item label span.category.suitcase,
 	.node-type-goxeedmodule-mission-user .category.suitcase { background-image: url(../images/icons/suitcase.png) !important; }
     
-	li.mission.pen,
+	li.mission.pen, .form-item label span.category.pen,
 	.node-type-goxeedmodule-mission-user .category.pen { background-image: url(../images/icons/pen.png) !important; }
     
-	li.mission.book
+	li.mission.book, .form-item label span.category.book,
 	.node-type-goxeedmodule-mission-user .category.book { background-image: url(../images/icons/book.png) !important; }
     
-	li.mission.tools
+	li.mission.tools, .form-item label span.category.tools,
 	.node-type-goxeedmodule-mission-user .category.tools { background-image: url(../images/icons/tools.png) !important; }
     
-	li.mission.key,
+	li.mission.key, .form-item label span.category.key,
 	.node-type-goxeedmodule-mission-user .category.key	{ background-image: url(../images/icons/key.png) !important; }
     
-	li.mission.ruler,
+	li.mission.ruler, .form-item label span.category.ruler,
 	.node-type-goxeedmodule-mission-user .category.ruler	{ background-image: url(../images/icons/ruler.png) !important; }
     
-	li.mission.microphone,
+	li.mission.microphone, .form-item label span.category.microphone,
 	.node-type-goxeedmodule-mission-user .category.microphone { background-image: url(../images/icons/microphone.png) !important; }
     
-	li.mission.Seat,
+	li.mission.Seat, .form-item label span.category.Seat,
 	.node-type-goxeedmodule-mission-user .category.Seat	{ background-image: url(../images/icons/seat.png) !important; }
     
-	li.mission.seat,
+	li.mission.seat, .form-item label span.category.seat,
 	.node-type-goxeedmodule-mission-user .category.seat { background-image: url(../images/icons/seat.png) !important; }
     
-	li.mission.umbrella,
+	li.mission.umbrella, .form-item label span.category.umbrella,
 	.node-type-goxeedmodule-mission-user .category.umbrella { background-image: url(../images/icons/umbrella.png) !important; }
     
-	li.mission.food_and_beverages,
+	li.mission.food_and_beverages, .form-item label span.category.food_and_beverages,
 	.node-type-goxeedmodule-mission-user .category.food_and_beverages { background-image: url(../images/icons/food_and_beverages.png) !important; }
 
 
 /* Leader board */
 table.goxeed.leaderboard tbody tr td {
   font-family: MuseoSansRounded300, "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+}
+
+table.goxeed.leaderboard tbody tr.current, table.goxeed.leaderboard tbody tr.current td {
+	background-color: #f9f8ce;
 }
 
 table.goxeed.leaderboard tbody tr td.position {
@@ -514,7 +596,7 @@ table.goxeed.leaderboard tbody tr td.position {
   height:20px;
   text-align:center;
   line-height:21px;
-  margin:0 -5px 0 0;
+  margin:0 -5px 0 5px;
   padding:0;
   -webkit-box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
   -moz-box-shadow: inset 0px 1px 0 0 rgba(0, 0, 0, .3);
@@ -536,6 +618,8 @@ table.goxeed.leaderboard tbody tr {
 
 }
 
+
+
 /* Extra buttons */
 #goxeedmodule_show_extra {
   margin:0 0 20px;
@@ -550,17 +634,58 @@ table.goxeed.leaderboard tbody tr {
 	Counter
 --------------------------------------------------*/
 #javascript_countdown_time {
-	font-family:  Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
 	background:none;
 	padding:11px 0 10px;
 	margin-top:20px;
 	text-align:center;
+	overflow: hidden;
 	moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	border: 2px solid #E9F0F3;
 }
 
+#javascript_countdown_time .icon {
+	font: bold 200% "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+	background-color: #C7D9E2;
+	color: #fff;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 0 5px;
+	margin: 0 5px 0 0;
+}
+
+#javascript_countdown_time .count {
+	float: right;
+	position: relative;
+	left: -50%;
+	text-align: left;
+}
+
+#javascript_countdown_time .ccount {
+	position: relative;
+	left: 50%;
+}
+
+#javascript_countdown_time .segment {
+	float: left;
+	position: relative;
+	text-align: center;
+	margin: 0 10px 0 0;
+}
+
+#javascript_countdown_time .segment .timetype {
+	display: block;
+	font-size: 92.3%;
+	color: #5d7782;
+}
+
+#javascript_countdown_time .intro {
+	font-size: 150%;
+	color: #5d7782;
+	margin: 0 0 10px;
+}
 /*--------------------------------------------------
 	Page: Mission
 --------------------------------------------------*/

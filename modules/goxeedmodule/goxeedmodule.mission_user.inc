@@ -83,7 +83,7 @@ function goxeedmodule_mission_user_challenge_user_add ($mission_user_nid, $chall
   }
   if (!$found)
   {
-    array_unshift($mission_user->field_goxeed_challenge_user_nid["und"], array ("value" => $challenge_user_nid));
+    array_push($mission_user->field_goxeed_challenge_user_nid["und"], array ("value" => $challenge_user_nid));
     node_save ($mission_user);
   }
 }

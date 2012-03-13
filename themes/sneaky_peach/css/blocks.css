@@ -143,6 +143,15 @@ margin-left:6px;
 color:#98ACB5;
 }
 
+/*#block-goxeedmodule-goxeedmodule-top-players ul li.current .position {
+	color: #f6f09c;
+}*/
+
+#block-goxeedmodule-goxeedmodule-top-players ul li.current {
+	background-color: #f9f8ce;
+	padding: 3px 0;
+}
+
 /* NPS */
 #block-goxeedmodule-goxeedmodule-nps {
   -moz-border-radius: 5px;

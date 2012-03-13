@@ -136,7 +136,7 @@ function goxeedmodule_game_user_mission_user_add ($game_user_nid, $mission_user_
   }
   if (!$found)
   {
-    array_unshift($game_user->field_goxeed_mission_user_nid["und"], array ("value" => $mission_user_nid));
+    array_push($game_user->field_goxeed_mission_user_nid["und"], array ("value" => $mission_user_nid));
     node_save ($game_user);
   }
 }
@@ -295,7 +295,12 @@ function goxeedmodule_goxeedmodule_preprocess_goxeedmodule_game_user($variables)
   $closing = $items[0]["value"];
   $current = date('U');
 
+//  $result = $result . '<div id ="javascript_countdown_time">';
+//  $result = $result . '<div class ="intro">'.t('This game ends in').'</div>';
+//  $result = $result . '<div class ="count">';
+//  $result = $result . '<div class ="ccount">';
   $result = $result . goxeedmodule_game_user_countdown ($closing - $current);
+//  $result = $result . '</div></div></div>';
 
   // MISSIONS
 
@@ -744,19 +749,39 @@ days1 = days - (days10 * 10);
 
 
 var result = "";
+
+result = result + "<div id=\'countdown_days\' class=\'segment\'>";
 if (days1000 > 0) result = result + "<span class=\'icon number"+days1000+"\'>"+days1000+"</span>";
 if (days1000 > 0 || days100 > 0) result = result + "<span class=\'icon number"+days100+"\'>"+days100+"</span>";
 if (days1000 > 0 || days100 > 0 || days10 > 0) result = result + "<span class=\'icon number"+days10+"\'>"+days10+"</span>";
 result = result + "<span class=\'icon number"+days1+"\'>"+days1+"</span>";
-result = result + " ";
+result = result + "<span class=\'timetype\'>'.t('days').'</span> ";
+result = result + "</div>";
+
+result = result + "<div id=\'countdown_hours\' class=\'segment\'>";
 result = result + "<span class=\'icon number"+hours10+"\'>"+hours10+"</span>";
 result = result + "<span class=\'icon number"+hours1+"\'>"+hours1+"</span>";
-result = result + " ";
+result = result + "<span class=\'timetype\'>'.t('hours').'</span> ";
+result = result + "</div>";
+
+result = result + "<div id=\'countdown_minutes\' class=\'segment\'>";
 result = result + "<span class=\'icon number"+minutes10+"\'>"+minutes10+"</span>";
 result = result + "<span class=\'icon number"+minutes1+"\'>"+minutes1+"</span>";
-result = result + " ";
+result = result + "<span class=\'timetype\'>'.t('minutes').'</span> ";
+result = result + "</div>";
+
+result = result + "<div id=\'countdown_seconds\' class=\'segment\'>";
 result = result + "<span class=\'icon number"+seconds10+"\'>"+seconds10+"</span>";
 result = result + "<span class=\'icon number"+seconds1+"\'>"+seconds1+"</span>";
+result = result + "<span class=\'timetype\'>'.t('seconds').'</span> ";
+result = result + "</div>";
+
+result = \'<div class =\"ccount\">\' + result;
+result = \'<div class =\"count\">\' + result;
+result = \'<div class =\"intro\">'.t('This game ends in').'</div>\' + result;
+  //$result = $result . goxeedmodule_game_user_countdown ($closing - $current);
+result = result + \'</div></div>\';
+
 return result;
 
 }
